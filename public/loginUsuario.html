@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    <link rel="stylesheet" href="css/estilo.css">
+
+</head>
+
+<body>
+
+    <div class="header">
+        <div class="container">
+            <a href="index.html"><img src="assets/imgs/logo.png" class="logo"></a>
+            <ul class="navBarForms">
+                <li><a href="calculadorafinanceira.HTML">Simulador</a></li>
+                <li><a href="login.html"><button>Entrar</button></a></li>
+                <li><a href="cadastro.html"><button>Cadastre-se</button></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main">
+
+        <img src="assets/imgs/logo.png">
+        
+        <div class="containerLogin">
+
+            <h1>Faça seu login <br> Usuario</h1>
+
+            <input type="text" class='class_input_log' id='email' placeholder="Email" autofocus">
+            <input type="password" class='class_input_log' id='pass' placeholder="Senha"  onkeypress="key()">
+            <a id='a_recuperacao' href="">Esqueceu a senha?</a>
+
+
+            <br>
+
+            <a  id="a_btn"><button id='btn_login' onclick="confirm()">Entrar</button></a>
+            <br>
+            <p>Não é cadastrado? <a class='a_class' href="cadastro.html">Cadastre-se</a></p>
+            <br>
+            <span style="color: '';" id="span_error"></span>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+
+    // Nesse script utilizei de alguns comandos que estavam no script da Júlia, porém antes de colocar pesquisei para que cada função servia //
+    // Também usei algumas coisas da internet para conseguir fazer o que eu queria, mas sempre entendendo antes de só colocar 
+
+    //peguei apenas o 'event.key' da internet 
+
+    function key(){
+        if(event.key === 'Enter'){
+        return confirm()
+
+        }else{}
+    }
+
+    function confirm(){
+        
+        var emailVar = email.value;
+        var passVar = pass.value;
+
+
+        if (emailVar == '' || passVar == ''){
+            /*
+            span_error.innerHTML = 'Você precisa preencher todos os campos';
+            span_error.style.color = 'red'
+            */
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Autenticação falhou!',
+                text: 'Você precisa preencher todos os campos'
+            });
+
+        }else if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".") == -1){
+            
+            span_error.innerHTML = 'E-mail inválido';
+            span_error.style.color = 'red';
+            
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Autenticação falhou!',
+                text: 'E-mail inválido'
+            });
+        }else {
+            fetch("/usuarios/autenticarUsuario", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    emailServer: emailVar,
+                    senhaServer: passVar
+                })
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO entrar()!")
+
+                if (resposta.ok) {
+                    console.log(resposta);
+
+                    resposta.json().then(json => {
+                        console.log(json);
+                        console.log(JSON.stringify(json));
+
+                        sessionStorage.EMAIL_USUARIO = json.email;
+                        sessionStorage.NOME_USUARIO = json.nome;
+                        sessionStorage.ID_USUARIO = json.idUsuario;
+
+                        setTimeout(function () {
+                            window.location = "dashboard/dashboard.html";
+                        }, 1000); // apenas para exibir o loading
+
+                    });
+
+                } else {
+
+                    /*
+
+                    console.log("Houve um erro ao tentar realizar o login!");
+
+                    resposta.text().then(texto => {
+                        console.error(texto);
+                        finalizarAguardar(texto);
+                    });
+
+                    */
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Autenticação Falhou!',
+                        text: 'Login e/ou senha inválida'
+                    });
+
+                }
+
+            }).catch(function (erro) {
+                console.log(erro);
+            })
+
+            return false;
+        }
+    }
+
+</script>

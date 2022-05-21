@@ -7,7 +7,9 @@ use Greentech;
 	(
     idEmpresa int primary key auto_increment,
     nomeEmpresa varchar (100),
-    CNPJ char (14)
+    CNPJ char (14),
+    nomeRepresentante varchar (75),
+    senha varchar (45)
 	)auto_increment=500;
     
 -- CRIANDO TABELA 2 USUARIO --
@@ -64,11 +66,11 @@ create table MonitoramentoSensor
     
     
 -- CRIANDO TABELA DE ALERTAS QUE SERÃO MOSTRADOS NA DASHBOARD --
-create table Alerta 
-	(
-	idAlerta int primary key,
+create table Alerta (
+	idAlerta int,
+    fkSensor int,
 	fkMonitoramento int,
-	fkSensor int,
-	foreign key (fkSensor, fkMonitoramento) references MonitoramentoSensor(fkSensor, idMonitoramento),
-	tipoAlerta varchar (45)
-	)auto_increment = 600;
+    tipoAlerta varchar (45),
+	foreign key (fkSensor, fkMonitoramento) references MonitoramentoSensor (fkSensor, idMonitoramento),
+    primary key (idAlerta, fkSensor, fkMonitoramento)
+);

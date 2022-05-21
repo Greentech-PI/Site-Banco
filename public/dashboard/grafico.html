@@ -18,7 +18,7 @@
 			<ul>
 				<h4 class="item-navbar" id="greenName">Greentech</h4>
 				<img id='img_user' src="../assets/imgs/user.jpg" alt="" class="item-navbar">
-				<h5 class="item-navbar" id="username">Fernanda Villa Rossi</h5>
+				<h5 class="item-navbar" id="username"></h5>
 				<p class="item-navbar" id="cargo">Gerente de vendas</p>
 				<li class="item-navbar">Home</li>
 			<a href="dashboard.html"><li class="item-navbar" id="aqui">Dashboard</li></a>
@@ -190,6 +190,12 @@
 </body>
 </html>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+	username.innerHTML = `${sessionStorage.getItem('NOME_USUARIO')}`;
+
+</script>
 
 <script>
 	const labelsTemperaturaPie = [

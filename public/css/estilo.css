@@ -614,6 +614,28 @@ html{
 
 /* Fim Home */
 
+/* Inicio Ajustes Tela Login Compartilhado */
+
+.btnOpcaoLogin{
+    color: white;
+    background-color: #3367A1;
+    width: 80%;
+    height: 10%;
+    border: 0;
+    border-radius: 30px;
+    font-size: 2vh;
+    cursor: pointer;
+    margin-top: 10%;
+}
+
+.btnOpcaoLogin a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Fim Ajustes Tela Login Compartilhado */
+
 /* Inicio Rodapé */
 
 .footer{

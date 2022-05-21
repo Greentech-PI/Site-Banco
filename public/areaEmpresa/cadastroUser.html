@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="../css/styleDash.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+	<!-- Div main é todo o corpo do pagina (tudo)-->
+
+	<div class="main">
+		<!-- Barra de navegação lateral-->
+
+		<div class="navbar">
+			<ul>
+				<h4 class="item-navbar" id="greenName">Greentech</h4>
+				<img id='img_user' src="../assets/imgs/user.jpg" alt="" class="item-navbar">
+				<h5 class="item-navbar" id="username"></h5>
+				<p class="item-navbar" id="cargo">Gerente de vendas</p>
+				<li class="item-navbar" id="aqui">Dashboard</li>
+			    <a href="grafico.html">	<li class="item-navbar" >Estufas</li> </a>
+				<li class="item-navbar">Contato</li>
+				<li class="item-navbar">Ajustes</li>
+                <a href="cadastroUser.html"><li class="item-navbar">Cadastrar</li></a>
+			</ul>
+		</div>
+
+			<!-- Div container é tudo que ficou na parte da box -->
+
+			<div class="container">
+
+				<div class="formCadastroUser">
+					<h1 class="tituloCadastroUser">Cadastrar Usuários</h1>
+					<p class="labelCadastroUser">Nome do Funcionário:</p>
+					<input id="inpNome" placeholder="Ex: Douglas Adão Nascimento" class="inputCadastroUser">
+					<p class="labelCadastroUser">Telefone:</p>
+					<input id="inpTelefone" placeholder="Ex: 95421-6423" class="inputCadastroUser">
+					<p class="labelCadastroUser">E-mail:</p>
+					<input id="inpEmail" placeholder="Ex: douglas.adao@gmail.com" class="inputCadastroUser" type="email">
+					<p class="labelCadastroUser">Senha:</p>
+					<input id="inpSenha" placeholder="******" class="inputCadastroUser" type="password">
+					<p class="labelCadastroUser">Confirme a Senha:</p>
+					<input id="inpConfirmarSenha" placeholder="******" class="inputCadastroUser" type="password">
+					<button onclick="confirm()" class="buttonCadastroUser">Cadastrar</button>
+				</div>
+
+			</div>
+	</div>
+</body>
+</html>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+
+	function key(){
+        if(event.key === 'Enter'){
+        return confirm()
+
+        }else{}
+    }
+
+    function confirm(){
+        
+        // Variaveis dos valores dos inputs 
+
+        var nameVar = inpNome.value;
+        var emailVar = inpEmail.value;
+        var passVar = inpSenha.value;
+        var cpassVar = inpConfirmarSenha.value;
+        var telefoneVar = inpTelefone.value;
+		var idEmpresaVar = sessionStorage.getItem('ID_EMPRESA');
+        
+
+        if (nameVar == '' || emailVar == '' || passVar == '' || cpassVar == ''||telefoneVar == '' || idEmpresaVar == ''){
+
+            //INNERHtml Comentado para usar os alerts personalizados, caso queira trocar apenas comente o bloco do Swal.fire e descomente o bloco abaixo
+
+            /*
+            span_error.innerHTML = 'Você precisa preencher todos os campos';
+            span_error.style.color = 'red';
+            */
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Cadastro falhou!',
+                text: 'Você precisa preencher todos os campos para prosseguir'
+            });
+
+        }else if (passVar != cpassVar){
+            /*
+            span_error.innerHTML = 'As senhas não coencidem';
+            span_error.style.color = 'red';
+            */
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Cadastro falhou!',
+                text: 'As senhas não coencidem'
+            });
+
+        }else if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".") == -1){
+            /*
+            span_error.innerHTML = 'E-mail inválido';
+            span_error.style.color = 'red';
+            */
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Cadastro falhou!',
+                text: 'E-mail inválido'
+            });
+            
+        }else {
+            fetch("/usuarios/cadastrarUsuario", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    // crie um atributo que recebe o valor recuperado aqui
+                    // Agora vá para o arquivo routes/usuario.js
+                    nomeServer: nameVar,
+                    emailServer: emailVar,
+                    senhaServer: passVar,
+                    telefoneServer: telefoneVar,
+					fkEmpresaServer: idEmpresaVar,
+                })
+            }).then(function (resposta) {
+
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    Swal.fire({
+                        title: 'Tudo Certo!',
+                        html: 'Cadastro realizado com sucesso!',
+                        icon: 'success',
+                        footer: '<a href="login.html">Fazer Login</a>',
+                        timer: 7000
+                    });
+					inpNome.value = '';
+					inpTelefone.value = '';
+					inpEmail.value = '';
+					inpSenha.value = '';
+					inpConfirmarSenha.value = '';
+                } else {
+                    throw ("Houve um erro ao tentar realizar o cadastro!");
+                }
+            }).catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                // finalizarAguardar();
+            });
+
+            return false;
+        }
+    }
+
+</script>
+
+<script>
+
+	username.innerHTML = `${sessionStorage.getItem('NOME_REPRESENTANTE')}`;
+
+</script>

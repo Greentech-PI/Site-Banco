@@ -32,7 +32,7 @@
             <input type="text" class='class_input' id='empresa' placeholder="Nome da empresa">
             <input type="text" class='class_input' id='cnpj'placeholder="CNPJ">
             <input type="text" class='class_input' id='representante'placeholder="Representante">            
-            <input type="password" class='class_input' id='pass' placeholder="Confirmar senha">
+            <input type="password" class='class_input' id='pass' placeholder="Senha">
             <input type="password" class='class_input' id='cpass' placeholder="Confirmar senha" onkeypress="key()">
 
             <br>
@@ -70,16 +70,14 @@
         
         // Variaveis dos valores dos inputs 
 
-        var nameVar = nome.value;
-        var emailVar = email.value;
         var passVar = pass.value;
         var cpassVar = cpass.value;
         var cnpjVar = cnpj.value;
         var empresaVar = empresa.value;
-        var telefoneVar = telefone.value;
+        var representanteVar = representante.value;
         
 
-        if (nameVar == '' || emailVar == '' || passVar == '' || cpassVar == ''|| cnpjVar == '' || empresaVar == '' || telefoneVar == ''){
+        if (passVar == '' || cpassVar == ''|| cnpjVar == '' || empresaVar == '' || representanteVar == ''){
 
             //INNERHtml Comentado para usar os alerts personalizados, caso queira trocar apenas comente o bloco do Swal.fire e descomente o bloco abaixo
 
@@ -106,19 +104,23 @@
                 text: 'As senhas não coencidem'
             });
 
-        }else if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".") == -1){
-            /*
+        }
+        
+        /*
+        VERIFICAÇÃO DE EMAIL VÁLIDO, SERÁ USADO NO OUTRO CADASTRO!
+        else if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".") == -1){
+            
             span_error.innerHTML = 'E-mail inválido';
             span_error.style.color = 'red';
-            */
+            
 
             Swal.fire({
                 icon: 'error',
                 title: 'Cadastro falhou!',
                 text: 'E-mail inválido'
             });
-            
-        }else if(cnpjVar.length != 14){
+        */ 
+        else if(cnpjVar.length != 14){
             Swal.fire({
                 icon: 'error',
                 title: 'Cadastro falhou!',
@@ -135,6 +137,8 @@
                     // Agora vá para o arquivo routes/usuario.js
                     nomeEmpresaServer: empresaVar,
                     CNPJServer: cnpjVar,
+                    nomeRepresentanteServer: representanteVar,
+                    senhaServer: passVar
                 })
             }).then(function (resposta) {
 
@@ -161,6 +165,8 @@
                 // finalizarAguardar();
             });
 
+            /*
+            CADASTRO DE USUÁRIO, SERÁ REALIZADO EM OUTRA TELA
             fetch("/usuarios/cadastrarUsuario", {
                 method: "POST",
                 headers: {
@@ -191,6 +197,7 @@
                 console.log(`#ERRO: ${resposta}`);
                 // finalizarAguardar();
             });
+            */
 
             return false;
         }
