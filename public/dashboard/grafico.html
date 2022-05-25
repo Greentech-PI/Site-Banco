@@ -165,25 +165,25 @@
 						<div id="btn-grafico">
 							<button>Semanal</button><button>Mensal</button><button>Diario</button>
 						</div>
-						<div class="box-graficos" id="grafico-media" style="display: none;">
+						<!-- <div class="box-graficos" id="grafico-media">
 							<div>
 								<canvas id="myChart" width="180px" height="180px"></canvas>
 							</div>
-							<div style="display: none;">
+							<div>
 								<canvas id="myChart2" width="180px" height="180px"></canvas>
 							</div>
-						</div>
+						</div> -->
 						<div class="box-graficos" id="graficoTemperatura">
 							<div>
-								<canvas id="myChart3" width="450px" height="240px"></canvas>
+								<canvas id="myChart3" width="450px" height="220px"></canvas>
 							</div>
 						</div>
 						
-						<!-- <div class="box-graficos" id="graficoUmidade" style="display: none;">
+						<div class="box-graficos" id="graficoUmidade" style="display: none;">
 							<div>
 								<canvas id="myChart4" width="450px" height="220px"></canvas>
 							</div>
-						</div>	-->
+						</div>
 
 					</div>
 	</div>
@@ -278,12 +278,6 @@
 				data: [28, 25, 23, 22, 25, 23, 29],
 				backgroundColor: 'green',
 				borderColor: 'green'		
-			},
-			{
-				label: 'Umidade',
-				data: [74, 78, 89, 93, 85, 88, 73],
-				backgroundColor: 'blue',
-				borderColor: 'blue'
 			}
 		]
 	};
@@ -307,7 +301,7 @@
 			circumference: 180, 
 			rotation: 270,
 			responsive: true,
-			maintainAspectRatio: false,
+			maintainAspectRatio: true,
 			scales: {
 				y: {
 					min: 0,
@@ -337,34 +331,34 @@
   </script>
  
  <script>
-	const myChart = new Chart(
-	  document.getElementById('myChart'),
-	  configTemperaturaPie
-	);
+	// const myChart = new Chart(
+	//   document.getElementById('myChart'),
+	//   configTemperaturaPie
+	// );
 
-	const myChart2 = new Chart(
-	  document.getElementById('myChart2'),
-	  configUmidadePie
-	);
+	// const myChart2 = new Chart(
+	//   document.getElementById('myChart2'),
+	//   configUmidadePie
+	// );
 
 	const myChart3 = new Chart(
 		document.getElementById('myChart3'),
 		configLineTemp
 	);
 
-	// const myChart4 = new Chart(
-	// 	document.getElementById('myChart4'),
-	// 	configLineUmidade
-	// );
+	const myChart4 = new Chart(
+		document.getElementById('myChart4'),
+		configLineUmidade
+	);
 
-	// function temperatura(){
-	// 	graficoTemperatura.style.display = 'block';
-	// 	graficoUmidade.style.display = 'none';
-	// }
+	function temperatura(){
+		graficoTemperatura.style.display = 'block';
+		graficoUmidade.style.display = 'none';
+	}
 
-	// function umidade(){
-	// 	graficoTemperatura.style.display = 'none';
-	// 	graficoUmidade.style.display = 'block';
-	// }
+	function umidade(){
+		graficoTemperatura.style.display = 'none';
+		graficoUmidade.style.display = 'block';
+	}
 
   </script>
