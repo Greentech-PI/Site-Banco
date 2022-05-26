@@ -395,7 +395,6 @@
             labels: [],
             datasets: [
                 {
-                    yAxisID: 'y-temperatura',
                     label: 'Temperatura',
                     borderColor: '#FFF',
                     backgroundColor: '#32b9cd8f',
@@ -426,28 +425,19 @@
                     text: 'Dados capturados'
                 },
                 scales: {
-                    yAxes: [{
-                        type: 'linear',
-                        display: true,
-                        position: 'left',
-                        id: 'y-temperatura',
-                        ticks: {
-                            beginAtZero: true,
-                            max: 100,
-                            min: 0
-                        }
-                    }],
+                    y: {
+						min: 0,
+						max: 40,
+					}
                 }
             }
         };
 
-		
-		const myChart3 = new Chart(
-			document.getElementById('myChart3'),
-			configLine
-		);
+		var ctx = document.getElementById('myChart3').getContext('2d');
+		window.graficoTemp = new Chart (ctx, configLine);
 
-        setTimeout(() => atualizarGrafico(idEstufa, dados), 2000);
+
+        setTimeout(() => atualizarGrafico(idEstufa, dados), 1000);
     }
 
 
@@ -472,7 +462,7 @@
                     dados.datasets[0].data.shift();  // apagar o primeiro de temperatura
                     dados.datasets[0].data.push(novoRegistro[0].temperatura); // incluir uma nova medida de temperatura
 
-                    window.myChart3.update();
+                    window.graficoTemp.update();
 
                     // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
                     proximaAtualizacao = setTimeout(() => atualizarGrafico(idEstufa, dados), 2000);
