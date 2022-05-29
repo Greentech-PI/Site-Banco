@@ -657,7 +657,7 @@ depois dizemos que a box shadow vai ser none, ou seja sem valor 0 0 0 0 ;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-
+  padding: 15px;
 }
 
 .boxes-metrica-grafico button {
@@ -689,6 +689,19 @@ depois dizemos que a box shadow vai ser none, ou seja sem valor 0 0 0 0 ;
   justify-content: space-around;
   padding: 15px;
   padding-left: 0;
+  height: 100%;
+}
+
+.btn-opcao-grafico{
+  color: white;
+    background-color: #3367A1;
+    width: 80%;
+    height: 10%;
+    border: 0;
+    border-radius: 30px;
+    font-size: 2vh;
+    cursor: pointer;
+    margin-top: 10%;
 }
 
 .box-graficos #grafico-historico{
