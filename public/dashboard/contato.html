@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greentech/Contato</title>
+    <link rel="stylesheet" href="../css/styleDash.css">
+</head>
+<body>
+    <div class="main">
+        <div class="navbar">
+			<ul>
+				<h4 class="item-navbar" id="greenName">Greentech</h4>
+				<img id='img_user' src="../assets/imgs/user.jpg" alt="" class="item-navbar">
+				<h5 class="item-navbar" id="username"></h5>
+				<p class="item-navbar" id="cargo">Gerente de vendas</p>
+				<a href="dashboard.html"><li class="item-navbar">Home</li></a>
+				<li class="item-navbar" id="aqui">Dashboard</li>
+			<a href="grafico.html">	<li class="item-navbar" >Estufas</li> </a>
+				<li class="item-navbar">Contato</li>
+				<li class="item-navbar">Ajustes</li>
+			</ul>
+		</div>
+        <div class="container">
+            <div class="titulos_contato">
+                <h1>Contato</h1>
+                <p>Entre em contato conosco através do formulário abaixo:</p>
+            </div>
+            <div class="form_contato">
+                <div class="form">
+                    <input type="text" id="inp_contato_nome" class="inputCadastroUserContato" placeholder="Seu nome">
+                    <input type="text" id="inp_contato_email" class="inputCadastroUserContato" placeholder="Seu e-mail">
+                    <input type="text" id="inp_contato_assunto" class="inputCadastroUserContato" placeholder="Assunto da mensagem">
+                    <input type="text" id="inp_contato_tipo" class="inputCadastroUserContato" placeholder="Tipo de ocorrência">
+                    <textarea cols="30" rows="5" class="inputCadastroUserContato" placeholder="Mensagem"></textarea>
+                    <button onclick="enviar_form()" class="buttonCadastroUserContato">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+    </script>
+</body>
+</html>

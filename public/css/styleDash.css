@@ -768,3 +768,57 @@ depois dizemos que a box shadow vai ser none, ou seja sem valor 0 0 0 0 ;
   align-self: end;
   margin-right: 50px;
 }
+
+.container .titulos_contato {
+  display: flex;
+  flex-direction: column;
+  height: 15vh;
+  justify-content: center;
+  align-items: center;
+  padding: 5%;
+  box-sizing: border-box;
+}
+
+.container .titulos_contato h1 {
+  font-size: 45px;
+  font-weight: 600;
+  font-family: 'Comfortaa', cursive;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.container .form_contato{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 85vh;
+}
+.container .form_contato .form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 50%;
+}
+
+.container .form_contato .inputCadastroUserContato{
+  width: 90%;
+  margin-top: 10px;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-bottom: solid 2px #555555;
+  background-color: rgb(241, 240, 240); 
+}
+.container .form_contato .buttonCadastroUserContato{
+  margin-top: 20px;
+  width: 25%;
+  color: white;
+  background-color: #3367A1;
+  height: 40px;
+  border: 0;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+}
