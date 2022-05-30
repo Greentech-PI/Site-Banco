@@ -106,50 +106,6 @@
 				<!-- Limite de caracteres da nome da estufa é 11-->
 				<div class="box-data">
 					<div class="boxes-data" id="corpo_pesquisaEstufas">
-						<div class="div-estufas">
-							<p>Norte</p> <div class="aviso-normal"></div>
-						</div>
-
-					<div class="div-estufas">
-						<p>Leste</p> <div class="aviso-perigo"></div>
-						
-					</div>
-
-					<div class="div-estufas">
-						<p>Leste II</p> <div class="aviso-cuidado"></div>
-
-					</div>
-					
-					<div class="div-estufas">
-						<p>Sul</p> <div class="aviso-normal"></div>
-			
-					</div>
-
-					<div class="div-estufas">
-						<p>Sul II</p> <div class="aviso-normal"></div>
-			
-					</div>
-
-					<div class="div-estufas">
-						<p>Leste III</p> <div class="aviso-off"></div>
-			
-					</div>
-
-					<div class="div-estufas">
-						<p>Norte II</p> <div class="aviso-normal"></div>
-			
-					</div>
-
-					<div class="div-estufas">
-						<p>Oeste</p> <div class="aviso-normal"></div>
-			
-					</div>
-
-					<div class="div-estufas">
-						<p>Oeste II</p> <div class="aviso-off"></div>
-			
-					</div>
-
 					
 					</div>
 
@@ -609,26 +565,32 @@
                 if (resposta.ok) {
 					
 				
-					console.log("Estufas recebidas: ", JSON.stringify(resposta));
+					console.log(resposta);
 
-					for(var i = 0; i < resposta.length; i++){
-						var estufa = resposta[i];
+					resposta.json().then(json => {
+						console.log(json);
+						console.log(JSON.stringify(json));
+						for(var i = 0; i < json.length; i++){
+							var estufa = json[i];
 
-						const divEstufa = document.createElement("div");
-						const nomeEstufa = document.createElement("p");
-						const divAviso = document.createElement("div");
+							const divEstufa = document.createElement("div");
+							const nomeEstufa = document.createElement("p");
+							const divAviso = document.createElement("div");
 
-						divEstufa.className = "div-estufas";
-						divAviso.className = "aviso-normal";
+							divEstufa.className = "div-estufas";
+							divAviso.className = "aviso-off";
 
-						nomeEstufa.innerHTML = `${estufa.nomeEstufa}`;
+							nomeEstufa.innerHTML = `${estufa.nomeEstufa}`;
 
-						divEstufa.appendChild(nomeEstufa);
-						divEstufa.appendChild(divAviso);
+							divEstufa.appendChild(nomeEstufa);
+							divEstufa.appendChild(divAviso);
 
-						corpo_pesquisaEstufas.appendChild(divEstufa);
-						
-					}
+							corpo_pesquisaEstufas.appendChild(divEstufa);
+							
+						}
+					});
+
+					
 
 					
 					

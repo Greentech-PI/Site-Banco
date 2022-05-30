@@ -734,7 +734,7 @@ depois dizemos que a box shadow vai ser none, ou seja sem valor 0 0 0 0 ;
 
 .tituloCadastroUser{
   font-weight: bold;
-  padding: 50px;
+  padding-left: 50px;
   font-size: 40px;
 }
 
