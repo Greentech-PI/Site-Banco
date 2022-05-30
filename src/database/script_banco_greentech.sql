@@ -39,27 +39,16 @@ create table Estufa
 	minUmidade decimal (5,2),
     maxUmidade decimal (5,2)
 	);
-    
--- CRIANDO TABELA 4 SENSORES --
-create table Sensor
-	(
-    localizacao varchar (45),
-    modelo varchar (45),
-	fkEmpresa int,
-    fkEstufa int,
-	foreign key (fkEmpresa, fkEstufa) references Estufa (fkEmpresa, idEstufa),
-    idSensor int primary key
-    );
 
 -- CRIANDO TABELA 5 DE MONITORAMENTO DOS SENSORES --
 create table MonitoramentoSensor 
 	(
-    fkSensor int,
-    foreign key (fkSensor) references Sensor(idSensor),
-	idMonitoramento int,
-    primary key(fkSensor, idMonitoramento),
-	temperatura decimal (5,2),
-	umidade decimal (5,2),
+	idMonitoramento int primary key auto_increment,
+	dht11_temperatura decimal (5,2),
+	dht11_umidade decimal (5,2),
+    luminosidade decimal(7,2),
+    lm35_temperatura decimal (5,2),
+    chave int,
 	momento datetime,
     fkEmpresa int,
     fkEstufa int,
@@ -69,11 +58,10 @@ create table MonitoramentoSensor
 -- CRIANDO TABELA DE ALERTAS QUE SERÃO MOSTRADOS NA DASHBOARD --
 create table Alerta (
 	idAlerta int,
-    fkSensor int,
 	fkMonitoramento int,
     tipoAlerta varchar (45),
-	foreign key (fkSensor, fkMonitoramento) references MonitoramentoSensor (fkSensor, idMonitoramento),
-    primary key (idAlerta, fkSensor, fkMonitoramento)
+	foreign key (fkMonitoramento) references MonitoramentoSensor (idMonitoramento),
+    primary key (idAlerta, fkMonitoramento)
 );
 
 
@@ -82,16 +70,18 @@ select * from estufa;
 select * from monitoramentosensor;
 select * from sensor;
 
-insert into Sensor (localizacao, modelo, fkEmpresa, fkEstufa, idSensor)
-	VALUES ('Centro Estufa Red 01', 'DHT11', 500, 1, 1);
+insert into empresa (nomeEmpresa, CNPJ, nomeRepresentante, senha)
+	values ('New Tomato', '38958816000103', 'Carlos', '123');
 
 insert into Estufa (fkEmpresa, idEstufa, nomeEstufa, tamanho, tipo, minTemp, maxTemp, minUmidade, maxUmidade)
 	VALUES (500, 1, 'Estufa Red 01', '2 Hec', 'Tomate-Cereja', 14.00, 25.00, 65.00, 95.00);
     
-insert into MonitoramentoSensor(fkSensor, idMonitoramento, temperatura, umidade, momento, fkEmpresa, fkEstufa)
+/*
+    
+insert into MonitoramentoSensor(fkSensor, idMonitoramento, dht11_temperatura, dht11_umidade, momento, fkEmpresa, fkEstufa)
 	VALUES (1, 1, 23.00, 82.00, now(), 500, 1);
 
-insert into MonitoramentoSensor(fkSensor, idMonitoramento, temperatura, umidade, momento, fkEmpresa, fkEstufa)
+insert into MonitoramentoSensor(fkSensor, idMonitoramento, dht11_temperatura, dht11_umidade, momento, fkEmpresa, fkEstufa)
 	VALUES (1, 2, 23.00, 81.00, now(), 500, 1);
     
 insert into MonitoramentoSensor(fkSensor, idMonitoramento, temperatura, umidade, momento, fkEmpresa, fkEstufa)
@@ -133,4 +123,7 @@ insert into MonitoramentoSensor(fkSensor, idMonitoramento, temperatura, umidade,
 insert into MonitoramentoSensor(fkSensor, idMonitoramento, temperatura, umidade, momento, fkEmpresa, fkEstufa)
 	VALUES (1, 15, 29.00, 78.00, now(), 500, 1);
     
-select * from monitoramentosensor;
+    insert into MonitoramentoSensor(fkSensor, idMonitoramento, temperatura, umidade, momento, fkEmpresa, fkEstufa)
+	VALUES (1, 16, 22.00, 90.00, now(), 500, 1);
+    
+*/
