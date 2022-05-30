@@ -432,7 +432,7 @@
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
             dados.labels.push(registro.momento_grafico);
-            dados.datasets[0].data.push(registro.temperatura);
+            dados.datasets[0].data.push(registro.dht11_temperatura);
         }
 
         console.log(JSON.stringify(dados));
@@ -485,7 +485,7 @@
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
             dados.labels.push(registro.momento_grafico);
-            dados.datasets[0].data.push(registro.umidade);
+            dados.datasets[0].data.push(registro.dht11_umidade);
         }
 
         console.log(JSON.stringify(dados));
@@ -539,17 +539,17 @@
                     dados.labels.push(novoRegistro[0].momento_grafico); // incluir um novo momento
                     
                     dados.datasets[0].data.shift();  // apagar o primeiro de temperatura
-                    dados.datasets[0].data.push(novoRegistro[0].temperatura); // incluir uma nova medida de temperatura
+                    dados.datasets[0].data.push(novoRegistro[0].dht11_temperatura); // incluir uma nova medida de temperatura
 
                     window.graficoTemp.update();
 
                     // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                    proximaAtualizacao = setTimeout(() => atualizarGraficoTemp(idEstufa, dados), 2000);
+                    proximaAtualizacao = setTimeout(() => atualizarGraficoTemp(idEstufa, dados), 300000);
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
                 // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                proximaAtualizacao = setTimeout(() => atualizarGraficoTemp(idEstufa, dados), 2000);
+                proximaAtualizacao = setTimeout(() => atualizarGraficoTemp(idEstufa, dados), 300000);
             }
         })
             .catch(function (error) {
@@ -572,17 +572,17 @@
 					dados.labels.push(novoRegistro[0].momento_grafico); // incluir um novo momento
 					
 					dados.datasets[0].data.shift();  // apagar o primeiro de temperatura
-					dados.datasets[0].data.push(novoRegistro[0].umidade); // incluir uma nova medida de temperatura
+					dados.datasets[0].data.push(novoRegistro[0].dht11_umidade); // incluir uma nova medida de temperatura
 
 					window.graficoTemp.update();
 
 					// Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-					proximaAtualizacao = setTimeout(() => atualizarGraficoUmid(idEstufa, dados), 2000);
+					proximaAtualizacao = setTimeout(() => atualizarGraficoUmid(idEstufa, dados), 300000);
 				});
 			} else {
 				console.error('Nenhum dado encontrado ou erro na API');
 				// Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-				proximaAtualizacao = setTimeout(() => atualizarGraficoUmid(idEstufa, dados), 2000);
+				proximaAtualizacao = setTimeout(() => atualizarGraficoUmid(idEstufa, dados), 300000);
 			}
 		})
 			.catch(function (error) {

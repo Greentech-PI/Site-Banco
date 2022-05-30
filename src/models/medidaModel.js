@@ -2,8 +2,8 @@ var database = require("../database/config");
 
 function buscarUltimasMedidas(idEstufa, limite_linhas) {
     instrucaoSql = `select 
-                        temperatura, 
-                        umidade, 
+                        dht11_temperatura, 
+                        dht11_umidade, 
                         momento,
                         DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico
                     from MonitoramentoSensor
@@ -15,8 +15,8 @@ function buscarUltimasMedidas(idEstufa, limite_linhas) {
 
 function buscarMedidasEmTempoReal(idEstufa) {
     instrucaoSql = `select 
-                        temperatura, 
-                        umidade, DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico, 
+                        dht11_temperatura, 
+                        dht11_umidade, DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico, 
                         fkEstufa 
                         from MonitoramentoSensor where fkEstufa = 1 
                     order by idMonitoramento desc limit 1`;

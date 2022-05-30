@@ -22,9 +22,9 @@
 				<h5 class="item-navbar" id="username"></h5>
 				<p class="item-navbar" id="cargo">Gerente de vendas</p>
 				<a href="dashboard.html"><li class="item-navbar">Home</li></a>
-			<li class="item-navbar" id="aqui">Dashboard</li>
+			    <a href="grafico.html">	<li class="item-navbar" >Estufas</li> </a>
 				<a href="contato.html"><li class="item-navbar">Contato</li></a>
-				<li class="item-navbar">Ajustes</li>
+				<a href="#"><li class="item-navbar">Ajustes</li></a>
 			</ul>
 		</div>
 			<!-- Div container é tudo que ficou na parte da box -->
@@ -105,11 +105,10 @@
 				<!--Div das box com os dados precisos do dashboard-->
 				<!-- Limite de caracteres da nome da estufa é 11-->
 				<div class="box-data">
-					<div class="boxes-data">
+					<div class="boxes-data" id="corpo_pesquisaEstufas">
 						<div class="div-estufas">
-						<p>Norte</p> <div class="aviso-normal"></div>
-						
-					</div>
+							<p>Norte</p> <div class="aviso-normal"></div>
+						</div>
 
 					<div class="div-estufas">
 						<p>Leste</p> <div class="aviso-perigo"></div>
@@ -431,7 +430,7 @@
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
             dados.labels.push(registro.momento_grafico);
-            dados.datasets[0].data.push(registro.temperatura);
+            dados.datasets[0].data.push(registro.dht11_temperatura);
         }
 
         console.log(JSON.stringify(dados));
@@ -484,7 +483,7 @@
         for (i = 0; i < resposta.length; i++) {
             var registro = resposta[i];
             dados.labels.push(registro.momento_grafico);
-            dados.datasets[0].data.push(registro.umidade);
+            dados.datasets[0].data.push(registro.dht11_umidade);
         }
 
         console.log(JSON.stringify(dados));
@@ -538,17 +537,17 @@
                     dados.labels.push(novoRegistro[0].momento_grafico); // incluir um novo momento
                     
                     dados.datasets[0].data.shift();  // apagar o primeiro de temperatura
-                    dados.datasets[0].data.push(novoRegistro[0].temperatura); // incluir uma nova medida de temperatura
+                    dados.datasets[0].data.push(novoRegistro[0].dht11_temperatura); // incluir uma nova medida de temperatura
 
                     window.graficoTemp.update();
 
                     // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                    proximaAtualizacao = setTimeout(() => atualizarGraficoTemp(idEstufa, dados), 2000);
+                    proximaAtualizacao = setTimeout(() => atualizarGraficoTemp(idEstufa, dados), 300000);
                 });
             } else {
                 console.error('Nenhum dado encontrado ou erro na API');
                 // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                proximaAtualizacao = setTimeout(() => atualizarGraficoTemp(idEstufa, dados), 2000);
+                proximaAtualizacao = setTimeout(() => atualizarGraficoTemp(idEstufa, dados), 300000);
             }
         })
             .catch(function (error) {
@@ -571,17 +570,17 @@
 					dados.labels.push(novoRegistro[0].momento_grafico); // incluir um novo momento
 					
 					dados.datasets[0].data.shift();  // apagar o primeiro de temperatura
-					dados.datasets[0].data.push(novoRegistro[0].umidade); // incluir uma nova medida de temperatura
+					dados.datasets[0].data.push(novoRegistro[0].dht11_umidade); // incluir uma nova medida de temperatura
 
 					window.graficoTemp.update();
 
 					// Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-					proximaAtualizacao = setTimeout(() => atualizarGraficoUmid(idEstufa, dados), 2000);
+					proximaAtualizacao = setTimeout(() => atualizarGraficoUmid(idEstufa, dados), 300000);
 				});
 			} else {
 				console.error('Nenhum dado encontrado ou erro na API');
 				// Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-				proximaAtualizacao = setTimeout(() => atualizarGraficoUmid(idEstufa, dados), 2000);
+				proximaAtualizacao = setTimeout(() => atualizarGraficoUmid(idEstufa, dados), 300000);
 			}
 		})
 			.catch(function (error) {
@@ -591,3 +590,55 @@
 	}
 
   </script>
+
+<script>
+
+	var fkEmpresa = sessionStorage.getItem('ID_EMPRESA');
+
+	fetch("/usuarios/buscarEstufas", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    fkEmpresa: fkEmpresa
+                })
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO buscarEmpresa()!");
+
+                if (resposta.ok) {
+					
+				
+					console.log("Estufas recebidas: ", JSON.stringify(resposta));
+
+					for(var i = 0; i < resposta.length; i++){
+						var estufa = resposta[i];
+
+						const divEstufa = document.createElement("div");
+						const nomeEstufa = document.createElement("p");
+						const divAviso = document.createElement("div");
+
+						divEstufa.className = "div-estufas";
+						divAviso.className = "aviso-normal";
+
+						nomeEstufa.innerHTML = `${estufa.nomeEstufa}`;
+
+						divEstufa.appendChild(nomeEstufa);
+						divEstufa.appendChild(divAviso);
+
+						corpo_pesquisaEstufas.appendChild(divEstufa);
+						
+					}
+
+					
+					
+				}
+			else {
+				throw ('Houve um erro na API!');
+			}
+
+	}).catch(function (resposta) {
+		console.error(resposta);
+	});
+
+</script>

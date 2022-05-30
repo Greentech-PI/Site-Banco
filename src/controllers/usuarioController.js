@@ -25,6 +25,25 @@ function listar(req, res) {
         );
 }
 
+function buscarEstufas(req, res){
+    var fkEmpresa = req.body.fkEmpresa;
+
+    usuarioModel.buscarEstufas(fkEmpresa)
+        .then(function (resultado) {
+            if(resultado.length > 0){
+                res.status(200).json(resultado);
+            }else {
+                res.status(204).send("Nenhum resultado encontrado!")
+            }
+        }).catch(
+            function (erro){
+                console.log(erro);
+                console.log("Houve um erro ao buscar as estufas! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        )
+}
+
 function entrarUsuario(req, res) {
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
@@ -182,5 +201,6 @@ module.exports = {
     cadastrarEmpresa,
     cadastrarUsuario,
     listar,
+    buscarEstufas,
     testar
 }
