@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="../css/styleDash.css">
+    <script type="text/javascript" src="https://www.chartjs.org/dist/2.8.0/Chart.min.js"></script>
+
+</head>
+<body>
+	<!-- Div main é todo o corpo do pagina (tudo)-->
+
+	<div class="main">
+		<!-- Barra de navegação lateral-->
+
+		<div class="navbar">
+			<ul>
+				<h4 class="item-navbar" id="greenName">Greentech</h4>
+				<img id='img_user' src="../assets/imgs/user.jpg" alt="" class="item-navbar">
+				<h5 class="item-navbar" id="username"></h5>
+				<p class="item-navbar" id="cargo">Gerente de vendas</p>
+				<a href="dashboard.html"><li class="item-navbar">Home</li></a>
+			<li class="item-navbar" id="aqui">Dashboard</li>
+				<li class="item-navbar">Contato</li>
+				<li class="item-navbar">Ajustes</li>
+			</ul>
+		</div>
+			<!-- Div container é tudo que ficou na parte da box -->
+
+			<div class="container">
+
+				<div class="titulos-grafico">
+					<div style="display: flex; justify-content:center; align-items:center">
+						<h1>Estufa Leste II</h1>
+					</div>
+					<div style="display: flex; justify-content:center; align-items:center; flex-direction: column;">
+						<div class="num-metrica">
+							<div class="metrica-bar">
+								<div id="bola-bar-red">
+									<p>Alerta</p>
+								</div>
+								<div id="bola-bar-orange">
+									<p>Cuidado</p>
+								</div>	
+								<div id="bola-bar-green">
+									<p>Normal</p>
+								</div>
+								<div id="bola-bar-orange">
+									<p>Cuidado</p>
+								</div>
+								<div id="bola-bar-red">
+									<p>Alerta</p>
+								</div>
+								<div id="bola-bar-silver">
+									<p>Inativa</p>
+								</div>
+							</div>
+					</div>
+
+				<!-- Colocando as métricas de forma numérica -->
+				
+				<div class="num-metrica" style="margin-top: 10px">
+
+					<div class="num-metrica-green">
+						<p style="color: red; font-weight: 700;">14 °C</p>
+						<p style="color: red; font-weight: 700;">60%</p>
+					</div>
+
+					<div class="num-metrica-green">
+						<p style="color: orange; font-weight: 700;">18 °C</p>
+						<p style="color: orange; font-weight: 700;">64%</p>
+					</div>
+
+					<div class="num-metrica-green">
+						<p style="color: green; font-weight: 700;">21 °C</p>
+						<p style="color: green; font-weight: 700;">70%</p>
+						
+					</div>
+
+					<div class="num-metrica-green">
+						<p style="color: orange; font-weight: 700;">25 °C</p>
+						<p style="color: orange; font-weight: 700;">77%</p>
+					</div>
+
+					<div class="num-metrica-green">
+						<p style="color: red; font-weight: 700;">27 °C</p>
+						<p style="color: red; font-weight: 700;">80%</p>
+					</div>
+
+					<div class="num-metrica-green">
+						<p style="color: grey; font-weight: 700;">0 °C</p>
+						<p style="color: grey; font-weight: 700;">0%</p>
+					</div>
+
+				</div>
+
+			</div>
+
+			</div>
+			
+				<!--Primeiras caixas para informaçoes gerais-->
+
+				<!--Div das box com os dados precisos do dashboard-->
+				<!-- Limite de caracteres da nome da estufa é 11-->
+				<div class="box-data">
+					<div class="boxes-data">
+						<div class="div-estufas">
+						<p>Norte</p> <div class="aviso-normal"></div>
+						
+					</div>
+
+					<div class="div-estufas">
+						<p>Leste</p> <div class="aviso-perigo"></div>
+						
+					</div>
+
+					<div class="div-estufas">
+						<p>Leste II</p> <div class="aviso-cuidado"></div>
+
+					</div>
+					
+					<div class="div-estufas">
+						<p>Sul</p> <div class="aviso-normal"></div>
+			
+					</div>
+
+					<div class="div-estufas">
+						<p>Sul II</p> <div class="aviso-normal"></div>
+			
+					</div>
+
+					<div class="div-estufas">
+						<p>Leste III</p> <div class="aviso-off"></div>
+			
+					</div>
+
+					<div class="div-estufas">
+						<p>Norte II</p> <div class="aviso-normal"></div>
+			
+					</div>
+
+					<div class="div-estufas">
+						<p>Oeste</p> <div class="aviso-normal"></div>
+			
+					</div>
+
+					<div class="div-estufas">
+						<p>Oeste II</p> <div class="aviso-off"></div>
+			
+					</div>
+
+					
+					</div>
+
+					<!--Fazendo a parte das informações numéricas-->
+
+					<!--Div grafico-->
+
+					<div class="boxes-metrica-grafico">
+						<div id="btn-grafico">
+							<button onclick="temperatura()" class="btn-opcao-grafico">Temperatura</button><button onclick="umidade()" class="btn-opcao-grafico">Umidade</button>
+						</div>
+						<!-- <div id="btn-grafico">
+							<button>Semanal</button><button>Mensal</button><button>Diario</button>
+						</div> -->
+						<!-- <div class="box-graficos" id="grafico-media">
+							<div>
+								<canvas id="myChart" width="180px" height="180px"></canvas>
+							</div>
+							<div>
+								<canvas id="myChart2" width="180px" height="180px"></canvas>
+							</div>
+						</div> -->
+						<div class="box-graficos" id="graficoTemperatura">
+							<div>
+								<canvas id="myChart3" width="450px" height="220px"></canvas>
+							</div>
+						</div>
+						
+						<div class="box-graficos" id="graficoUmidade" style="display: none;">
+							<div>
+								<canvas id="myChart4" width="450px" height="220px"></canvas>
+							</div>
+						</div>
+
+					</div>
+	</div>
+</body>
+</html>
+
+<script>
+
+	username.innerHTML = `${sessionStorage.getItem('NOME_USUARIO')}`;
+
+</script>
