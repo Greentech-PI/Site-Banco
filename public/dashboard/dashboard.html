@@ -33,7 +33,7 @@
 			<div class="container">
 
 				<div class="titulos">
-				<h1>Fazenda Carabellum</h1>
+				<h1 id="nomeEmpresa">Fazenda Carabellum</h1>
 
 				<div id="organizar-titulo">
 				<div class="metrica-bar">	
@@ -235,5 +235,7 @@
 <script>
 
 	username.innerHTML = `${sessionStorage.getItem('NOME_USUARIO')}`;
+
+	nomeEmpresa.innerHTML = `${sessionStorage.getItem('NOME_EMPRESA')}`;
 
 </script>
