@@ -4,6 +4,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Bodoni:ital@1&family=Radio+Canada:wght@300;500&family=Tapestry&display=swap');
 
 /* Padronizando o corpo do página divs pais*/
+
+
+/* Arrumando Scroll */
+::-webkit-scrollbar {
+  width: 0.4vw;
+}
+::-webkit-scrollbar-track {
+  scrollbar-color: none;
+}
+::-webkit-scrollbar-thumb {
+  background: #085002bb; 
+  border-radius: 5px;
+}
+
+
 *{
 	margin: 0;
 	padding: 0;
