@@ -56,7 +56,7 @@ function buscarEstufas(fkEmpresa){
     console.log("ACESSEI O USUARIO MODnEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", fkEmpresa);
 
     var instrucao = `
-        select nomeEstufa from estufa where fkEmpresa = ${fkEmpresa};
+        select distinct nomeEstufa, idEstufa, fkEstufa from MonitoramentoSensor right join Estufa ON MonitoramentoSensor.fkEstufa = Estufa.idEstufa AND Estufa.fkEmpresa = ${fkEmpresa};
     `;
     console.log("Executando a instrução SQL: \n " + instrucao);
     return database.executar(instrucao);

@@ -218,6 +218,7 @@
 					resposta.json().then(json => {
 						console.log(json);
 						console.log(JSON.stringify(json));
+						var contadorId = 1;
 						for(var i = 0; i < json.length; i++){
 							var estufa = json[i];
 
@@ -225,8 +226,13 @@
 							const nomeEstufa = document.createElement("p");
 							const divAviso = document.createElement("div");
 
+							if(estufa.fkEstufa == 1){
+								divAviso.className = "aviso-normal";
+							}else if(estufa.fkEstufa == undefined) {
+								divAviso.className = "aviso-off";
+							}
+
 							divEstufa.className = "div-estufas";
-							divAviso.className = "aviso-off";
 
 							nomeEstufa.innerHTML = `${estufa.nomeEstufa}`;
 
@@ -234,13 +240,8 @@
 							divEstufa.appendChild(divAviso);
 
 							corpo_pesquisaEstufas.appendChild(divEstufa);
-							
 						}
 					});
-
-					
-
-					
 					
 				}
 			else {
@@ -250,5 +251,6 @@
 	}).catch(function (resposta) {
 		console.error(resposta);
 	});
+
 
 </script>
