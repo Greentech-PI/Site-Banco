@@ -11,4 +11,12 @@ router.get("/tempo-real/:idAquario", function (req, res) {
     medidaController.buscarMedidasEmTempoReal(req, res);
 })
 
+router.get("/buscarEstufaProblema", function (req, res) {
+    medidaController.buscarEstufaProblema(req, res);
+});
+
+router.get("/buscarEstufaRecorrente", function (req, res){
+    medidaController.buscarEstufaRecorrente(req, res);
+});
+
 module.exports = router;

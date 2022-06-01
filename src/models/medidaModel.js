@@ -25,8 +25,26 @@ function buscarMedidasEmTempoReal(idEstufa) {
     return database.executar(instrucaoSql);
 }
 
+function buscarEstufaProblema(){
+    var instrucaoSql = `
+        select nomeEstufa from estufa INNER JOIN monitoramentosensor on estufa.idestufa = monitoramentosensor.fkestufa WHERE dht11_temperatura > maxTemp OR dht11_temperatura < minTemp OR dht11_umidade > maxUmidade OR dht11_umidade < minUmidade limit 1;
+    `;
+    console.log("Executando a instrução SQL: \n " + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarEstufaRecorrente(){
+    var instrucaoSql = `
+        select nomeEstufa, count(idMonitoramento) as 'qtdeRegistros' from monitoramentosensor inner join estufa on estufa.idEstufa = monitoramentosensor.fkestufa group by nomeEstufa;
+    `;
+    console.log("Executando a instrução SQL: \n " + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
+    buscarMedidasEmTempoReal,
+    buscarEstufaProblema,
+    buscarEstufaRecorrente
 }

@@ -87,21 +87,21 @@
 						<img src="../assets/imgs/greenhouse.png">
 						<div class="text">
 						<p>Estufas inativas</p>
-						<h4>2</h4>
+						<h4 id="txtKpiEstufasInativas">2</h4>
 					    </div>    
 				    </div>
 					<div class="box">
 						<img src="../assets/imgs/warning.png">
 						<div class="text">
 						<p>Cuidado necessário</p>
-						<h4 style="color: rgb(185, 31, 31);">Leste</h4>
+						<h4 style="color: rgb(185, 31, 31);" id="txtKpiCuidadoNecessario">Leste</h4>
 					    </div>
 					</div>
 					<div class="box">
 						<img src="../assets/imgs/house.png">
 						<div class="text">
 						<p style="font-size: 13px;">Maior tempo de alarme</p> 
-						<h4>Leste II</h4>
+						<h4 id="txtKpiEstufaRecorrente">Leste II</h4>
 					    </div>
 					</div>
 				</div>
@@ -225,11 +225,13 @@
 							const divEstufa = document.createElement("div");
 							const nomeEstufa = document.createElement("p");
 							const divAviso = document.createElement("div");
+							var estufasInativas = 0;
 
-							if(estufa.fkEstufa == 1){
+							if(estufa.fkEstufa != undefined){
 								divAviso.className = "aviso-normal";
 							}else if(estufa.fkEstufa == undefined) {
 								divAviso.className = "aviso-off";
+								estufasInativas++;
 							}
 
 							divEstufa.className = "div-estufas";
@@ -241,6 +243,8 @@
 
 							corpo_pesquisaEstufas.appendChild(divEstufa);
 						}
+						var kpiEstufaInativa = document.getElementById("txtKpiEstufasInativas");
+						kpiEstufaInativa.innerHTML = `${estufasInativas}`;
 					});
 					
 				}
@@ -252,5 +256,56 @@
 		console.error(resposta);
 	});
 
+
+</script>
+
+<script>
+
+	fetch("/medidas/buscarEstufaProblema").then(function (response){
+		if(response.ok){
+			console.log(response)
+			response.json().then(json =>  {
+				console.log(JSON.stringify(json));
+				for(var i = 0; i < json.length; i++){
+					var empresa = json[i];
+					var nomeEmpresa = empresa.nomeEstufa;
+					var kpiCuidadoNecessario = document.getElementById("txtKpiCuidadoNecessario");
+				kpiCuidadoNecessario.innerHTML = `${nomeEmpresa}`;	
+				}
+			}); 
+		}else {
+			console.error('Nenhum dado encontrado ou erro na API');
+		}
+	}).catch(function (error) {
+		console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+	});
+	
+</script>
+
+<script>
+
+fetch("/medidas/buscarEstufaRecorrente").then(function (response){
+		if(response.ok){
+			console.log(response)
+			response.json().then(json =>  {
+				console.log(JSON.stringify(json));
+				var qtdeAlertas = 0;
+				var nomeEstufa = '';
+				for(var i = 0; i < json.length; i++){
+					var estufa = json[i];
+					if(estufa.qtdeRegistros > qtdeAlertas){
+						nomeEstufa = estufa.nomeEstufa;
+						qtdeAlertas = estufa.qtdeRegistros;
+					}
+					var kpiEstufaRecorrente = document.getElementById("txtKpiEstufaRecorrente");
+					kpiEstufaRecorrente.innerHTML = `${nomeEstufa}`;	
+				}
+			}); 
+		}else {
+			console.error('Nenhum dado encontrado ou erro na API');
+		}
+	}).catch(function (error) {
+		console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+	});
 
 </script>
