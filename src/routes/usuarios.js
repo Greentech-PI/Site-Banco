@@ -28,6 +28,10 @@ router.post("/autenticarEmpresa", function (req, res) {
     usuarioController.entrarEmpresa(req, res);
 });
 
+router.post("/ultimoRegistroEstufa", function (req, res) {
+    usuarioController.ultimoRegistroEstufa(req, res);
+})
+
 router.post("/autenticarUsuario", function (req, res) {
     usuarioController.entrarUsuario(req, res);
 });

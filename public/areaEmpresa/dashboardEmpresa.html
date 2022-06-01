@@ -309,3 +309,27 @@ fetch("/medidas/buscarEstufaRecorrente").then(function (response){
 	});
 
 </script>
+
+<script>
+
+	fetch("/usuarios/ultimoRegistroEstufa", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			fkEmpresa: fkEmpresa
+		})
+	}).then(function (resposta) {
+		console.log("ESTOU NO THEN DO ultimoRegistroEstufa()!");
+
+		if(resposta.ok) {
+			
+		}else{
+			throw ('Houve um erro na API!');
+		}
+	}).catch(function (resposta) {
+		console.error(resposta);
+	});
+
+</script>

@@ -53,10 +53,20 @@ function cadastrarUsuario(nome, email, senha, telefone, fkEmpresa){
 }
 
 function buscarEstufas(fkEmpresa){
-    console.log("ACESSEI O USUARIO MODnEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", fkEmpresa);
+    console.log("ACESSEI O USUARIO MODnEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarEstufas(): ", fkEmpresa);
 
     var instrucao = `
         select distinct nomeEstufa, idEstufa, fkEstufa from MonitoramentoSensor right join Estufa ON MonitoramentoSensor.fkEstufa = Estufa.idEstufa AND Estufa.fkEmpresa = ${fkEmpresa};
+    `;
+    console.log("Executando a instrução SQL: \n " + instrucao);
+    return database.executar(instrucao);
+}
+
+function ultimoRegistroEstufa(fkEmpresa){
+    console.log("ACESSEI O USUARIO MODnEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function ultimoRegistroEstufa(): ", fkEmpresa)
+
+    var instrucao = `
+        select distinct nomeEstufa, idEstufa, fkEstufa, dht11_temperatura, dht11_umidade from MonitoramentoSensor right join Estufa ON MonitoramentoSensor.fkEstufa = Estufa.idEstufa AND Estufa.fkEmpresa = ${fkEmpresa} where momento = (select max(momento) from monitoramentosensor);
     `;
     console.log("Executando a instrução SQL: \n " + instrucao);
     return database.executar(instrucao);
@@ -68,5 +78,6 @@ module.exports = {
     cadastrarEmpresa,
     cadastrarUsuario,
     buscarEstufas,
+    ultimoRegistroEstufa,
     listar,
 };
