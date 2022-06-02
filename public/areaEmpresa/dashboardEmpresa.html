@@ -116,16 +116,16 @@
 					<!--Fazendo a parte das informações numéricas-->
 
 					<!--Div Principal-->
-					<div class="boxes-metrica">
+					<div class="boxes-metrica" id="tabelaTempoReal">
 
 
 						<div class="titulos"><p>Estufa</p><p>Temperatura</p><p>Umidade</p></div>
 
 
-						<div class="div-metrica">
-						<div class="div-estufa-name"><p style="color: red; font-weight: bold;">Leste</p></div>
-						<div class="temp"><p style="color: red; font-weight: bold;">27.4 °C</p></div>
-						<div class="umidade"> <p>71%</p></div>
+						<!-- <div class="div-metrica">
+							<div class="div-estufa-name"><p style="color: red; font-weight: bold;">Leste</p></div>
+							<div class="temp"><p style="color: red; font-weight: bold;">27.4 °C</p></div>
+							<div class="umidade"> <p>71%</p></div>
 						</div>
 					
 
@@ -175,7 +175,7 @@
 						<div class="div-estufa-name"><p style="color: rgb(158, 158, 158);">Oeste II</p></div>
 						<div class="temp"><p style="color: rgb(158, 158, 158);">0 °C</p></div>
 						<div class="umidade"> <p style="color: rgb(158, 158, 158);">0%</p></div>
-						</div>
+						</div> -->
 
 							
 					
@@ -216,16 +216,15 @@
 					console.log(resposta);
 
 					resposta.json().then(json => {
-						console.log(json);
 						console.log(JSON.stringify(json));
 						var contadorId = 1;
+						var estufasInativas = 0;
 						for(var i = 0; i < json.length; i++){
 							var estufa = json[i];
 
 							const divEstufa = document.createElement("div");
 							const nomeEstufa = document.createElement("p");
 							const divAviso = document.createElement("div");
-							var estufasInativas = 0;
 
 							if(estufa.fkEstufa != undefined){
 								divAviso.className = "aviso-normal";
@@ -324,7 +323,44 @@ fetch("/medidas/buscarEstufaRecorrente").then(function (response){
 		console.log("ESTOU NO THEN DO ultimoRegistroEstufa()!");
 
 		if(resposta.ok) {
-			
+			console.log(resposta);
+			resposta.json().then(json => {
+				console.log(JSON.stringify(json));
+				var tabela =  document.getElementById("tabelaTempoReal");
+				for(var i = 0; i < json.length; i++){
+					var estufa = json[i];
+					var div_metrica = document.createElement("div");
+					var div_estufa_nome = document.createElement("div");
+					var texto_estufa_nome = document.createElement("p");
+					var div_temp = document.createElement("div");
+					var texto_temp = document.createElement("p");
+					var div_umid = document.createElement("div");
+					var texto_umid = document.createElement("p");
+					
+					texto_temp.innerHTML = `${estufa.dht11_temperatura}ºC`;
+					texto_umid.innerHTML = `${estufa.dht11_umidade}%`;
+					texto_estufa_nome.innerHTML = `${estufa.nomeEstufa}`;
+
+					if(estufa.dht11_temperatura > 20){
+						alert("FOGO");
+					}
+
+					div_metrica.className = "div-metrica";
+					div_estufa_nome.className = "div-estufa-name";
+					div_temp.className = "temp";
+					div_umid.className = "umidade";
+
+					div_estufa_nome.appendChild(texto_estufa_nome);
+					div_temp.appendChild(texto_temp);
+					div_umid.appendChild(texto_umid);
+
+					div_metrica.appendChild(div_estufa_nome);
+					div_metrica.appendChild(div_temp);
+					div_metrica.appendChild(div_umid);
+
+					tabela.appendChild(div_metrica);
+				}
+			}); 
 		}else{
 			throw ('Houve um erro na API!');
 		}
