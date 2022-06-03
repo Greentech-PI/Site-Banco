@@ -21,11 +21,11 @@
 				<img id='img_user' src="../assets/imgs/user.jpg" alt="" class="item-navbar">
 				<h5 class="item-navbar" id="username"></h5>
 				<p class="item-navbar" id="cargo">Gerente de vendas</p>
-				<li class="item-navbar" id="aqui">Dashboard</li>
+				<a href="dashboardEmpresa.html"><li class="item-navbar" id="aqui">Dashboard</li></a>
 			    <a href="grafico.html">	<li class="item-navbar" >Estufas</li> </a>
 				<li class="item-navbar">Contato</li>
-				<li class="item-navbar">Ajustes</li>
-                <a href="cadastroUser.html"><li class="item-navbar">Cadastrar</li></a>
+                <a href="cadastroUser.html"><li class="item-navbar">Cadastrar Func</li></a>
+				<a href="cadastroEstufa.html"><li class="item-navbar">Cadastrar Estufa</li></a>
 			</ul>
 		</div>
 			<!-- Div container é tudo que ficou na parte da box -->
@@ -34,7 +34,7 @@
 
 				<div class="titulos-grafico">
 					<div style="display: flex; justify-content:center; align-items:center">
-						<h1>Estufa Leste II</h1>
+						<h1 id="txtNomeEstufa">Estufa Leste II</h1>
 					</div>
 					<div style="display: flex; justify-content:center; align-items:center; flex-direction: column;">
 						<div class="num-metrica">
@@ -65,29 +65,29 @@
 				<div class="num-metrica" style="margin-top: 10px">
 
 					<div class="num-metrica-green">
-						<p style="color: red; font-weight: 700;">14 °C</p>
-						<p style="color: red; font-weight: 700;">60%</p>
+						<p style="color: red; font-weight: 700;" id="txtMinTemp">14 °C</p>
+						<p style="color: red; font-weight: 700;" id="txtMinUmid">60%</p>
 					</div>
 
 					<div class="num-metrica-green">
-						<p style="color: orange; font-weight: 700;">18 °C</p>
-						<p style="color: orange; font-weight: 700;">64%</p>
+						<p style="color: orange; font-weight: 700;" id="txtBaixaTemp">18 °C</p>
+						<p style="color: orange; font-weight: 700;" id="txtBaixaUmid">64%</p>
 					</div>
 
 					<div class="num-metrica-green">
-						<p style="color: green; font-weight: 700;">21 °C</p>
-						<p style="color: green; font-weight: 700;">70%</p>
+						<p style="color: green; font-weight: 700;" id="txtTempNormal">21 °C</p>
+						<p style="color: green; font-weight: 700;" id="txtUmidNormal">70%</p>
 						
 					</div>
 
 					<div class="num-metrica-green">
-						<p style="color: orange; font-weight: 700;">25 °C</p>
-						<p style="color: orange; font-weight: 700;">77%</p>
+						<p style="color: orange; font-weight: 700;" id="txtAltaTemp">25 °C</p>
+						<p style="color: orange; font-weight: 700;" id="txtAltaUmid">77%</p>
 					</div>
 
 					<div class="num-metrica-green">
-						<p style="color: red; font-weight: 700;">27 °C</p>
-						<p style="color: red; font-weight: 700;">80%</p>
+						<p style="color: red; font-weight: 700;" id="txtMaxTemp">27 °C</p>
+						<p style="color: red; font-weight: 700;" id="txtMaxUmid">80%</p>
 					</div>
 
 					<div class="num-metrica-green">
@@ -194,6 +194,12 @@
 
 							nomeEstufa.innerHTML = `${estufa.nomeEstufa}`;
 
+							divEstufa.id = `${estufa.idEstufa}`;
+							nomeEstufa.id = `${estufa.idEstufa}`;
+							divAviso.id = `${estufa.idEstufa}`;
+
+							console.log(estufa.idEstufa);
+
 							divEstufa.appendChild(nomeEstufa);
 							divEstufa.appendChild(divAviso);
 
@@ -210,6 +216,46 @@
 		console.error(resposta);
 	});
 
+
+</script>
+
+<script>
+
+	var corpoEstufa = document.getElementById("corpo_pesquisaEstufas");
+
+	corpoEstufa.addEventListener("click", function(e) {
+		var idEstufa = e.target.id;
+		sessionStorage.ID_ESTUFA = idEstufa;
+		console.log(idEstufa);
+		carregarMedidas(idEstufa);
+	});
+
+	function carregarMedidas(idEstufa){
+		fetch(`/medidas/buscarMetricasEstufa/${idEstufa}`, { cache: 'no-store' }).then(function (response) {
+			if(response.ok) {
+				response.json().then(function (metricas) {
+					console.log(`Dados recebidos: ${JSON.stringify(metricas)}`);
+
+					txtNomeEstufa.innerHTML = `${metricas[0].nomeEstufa}`;
+
+					txtMinTemp.innerHTML = `${metricas[0].minTemp}ºC`;
+					txtBaixaTemp.innerHTML = `${metricas[0].baixaTemp}ºC`;
+					txtAltaTemp.innerHTML = `${metricas[0].altaTemp}ºC`;
+					txtMaxTemp.innerHTML = `${metricas[0].maxTemp}ºC`;
+					txtTempNormal.innerHTML = `${metricas[0].tempNormal}ºC`;
+					txtMinUmid.innerHTML = `${metricas[0].minUmidade}%`;
+					txtBaixaUmid.innerHTML = `${metricas[0].baixaUmidade}%`;
+					txtAltaUmid.innerHTML = `${metricas[0].altaUmidade}%`;
+					txtMaxUmid.innerHTML = `${metricas[0].maxUmidade}%`;
+					txtUmidNormal.innerHTML = `${metricas[0].umidNormal}%`;
+				});
+			} else {
+				console.error('Nenhum dado encontrado ou erro na API');
+			}
+		})
+	}
+
+	
 
 </script>
 

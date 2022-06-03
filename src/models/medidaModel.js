@@ -41,10 +41,19 @@ function buscarEstufaRecorrente(){
     return database.executar(instrucaoSql);
 }
 
+function buscarMetricasEstufa(idEstufa){
+    var instrucaoSql = `
+        SELECT nomeEstufa, minTemp, baixaTemp, tempNormal, altaTemp, maxTemp, minUmidade, baixaUmidade, umidNormal, altaUmidade, maxUmidade FROM Estufa WHERE idEstufa = ${idEstufa};
+    `;
+    console.log("Executando a instrução SQL \n " + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
     buscarEstufaProblema,
-    buscarEstufaRecorrente
+    buscarEstufaRecorrente,
+    buscarMetricasEstufa
 }

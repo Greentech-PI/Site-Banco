@@ -215,6 +215,72 @@ function cadastrarUsuario(req, res){
     }
 }
 
+function cadastrarEstufa(req, res){
+    var nome = req.body.nomeServer;
+    var tamanho = req.body.tamanhoServer;
+    var tempMin = req.body.tempMinimaServer;
+    var tempBaixa = req.body.tempBaixaServer;
+    var tempNormal = req.body.tempNormalServer;
+    var tempAlta = req.body.tempAltaServer;
+    var tempMaxima = req.body.tempMaximaServer;
+    var umidMin = req.body.umidMinimaServer;
+    var umidBaixa = req.body.umidBaixaServer;
+    var umidNormal = req.body.umidNormalServer;
+    var umidAlta = req.body.umidAltaServer;
+    var umidMaxima = req.body.umidMaximaServer;
+    var fkEmpresa = req.body.fkEmpresaServer;
+
+
+
+    // Faça as validações dos valores
+    if (nome == undefined) {
+        res.status(400).send("Seu nome está undefined!");
+    } else if (tamanho == undefined) {
+        res.status(400).send("Seu tamanho está undefined!");
+    } else if (tempMin == undefined) {
+        res.status(400).send("Sua temperatura minima está undefined!");
+    } else if(tempBaixa == undefined){
+        res.status(400).send("Sua temperatura baixa está undefined!");
+    } else if(tempNormal == undefined){
+        res.status(400).send("Sua temperatura normal está undefined!");
+    } else if(tempAlta == undefined){
+        res.status(400).send("Sua temperatura alta está undefined!");
+    } else if(tempMaxima == undefined){
+        res.status(400).send("Sua temperatura maxima está undefined!");
+    } else if(umidMin == undefined){
+        res.status(400).send("Sua umidade minima está undefined!");
+    } else if(umidBaixa == undefined){
+        res.status(400).send("Sua umidade baixa está undefined!");
+    } else if(umidNormal == undefined){
+        res.status(400).send("Sua umidade normal está undefined!");
+    } else if(umidAlta == undefined){
+        res.status(400).send("Sua umidade alta está undefined!");
+    } else if(umidMaxima == undefined){
+        res.status(400).send("Sua umidade maxima está undefined!");
+    } else if(fkEmpresa == undefined){
+        res.status(400).send("Sua empresa está undefined!");
+    }else {
+        
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+
+        usuarioModel.cadastrarEstufa(nome, tamanho, tempMin, tempBaixa, tempNormal, tempAlta, tempMaxima, umidMin, umidBaixa, umidNormal, umidAlta, umidMaxima, fkEmpresa)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 module.exports = {
     entrarEmpresa,
     entrarUsuario,
@@ -223,5 +289,6 @@ module.exports = {
     listar,
     buscarEstufas,
     ultimoRegistroEstufa,
-    testar
+    testar,
+    cadastrarEstufa
 }

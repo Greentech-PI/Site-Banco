@@ -56,7 +56,7 @@ function buscarEstufas(fkEmpresa){
     console.log("ACESSEI O USUARIO MODnEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function buscarEstufas(): ", fkEmpresa);
 
     var instrucao = `
-        select distinct nomeEstufa, idEstufa, fkEstufa from MonitoramentoSensor right join Estufa ON MonitoramentoSensor.fkEstufa = Estufa.idEstufa AND Estufa.fkEmpresa = ${fkEmpresa};
+    select distinct nomeEstufa, idEstufa, minTemp, baixaTemp, tempNormal, altaTemp, maxTemp, minUmidade, baixaUmidade, umidNormal, altaUmidade, maxUmidade, fkEstufa from MonitoramentoSensor right join Estufa ON MonitoramentoSensor.fkEstufa = Estufa.idEstufa AND Estufa.fkEmpresa = ${fkEmpresa};
     `;
     console.log("Executando a instrução SQL: \n " + instrucao);
     return database.executar(instrucao);
@@ -72,6 +72,15 @@ function ultimoRegistroEstufa(fkEmpresa){
     return database.executar(instrucao);
 }
 
+function cadastrarEstufa(nomeEstufa, tamanho, minTemp, baixaTemp, tempNormal, altaTemp, maxTemp, minUmidade, baixaUmidade, umidNormal, altaUmidade, maxUmidade, fkEmpresa){
+    console.log("ACESSEIO O MODEL USUÁRIO PARA CADASTRAR UMA ESTUFA", nomeEstufa, tamanho, minTemp, baixaTemp, tempNormal, altaTemp, maxTemp, minUmidade, baixaUmidade, umidNormal, altaUmidade, maxUmidade, fkEmpresa);
+    var instrucao = `
+        INSERT INTO Estufa (nomeEstufa, tamanho, minTemp, baixaTemp, tempNormal, altaTemp, maxTemp, minUmidade, baixaUmidade, umidNormal, altaUmidade, maxUmidade, fkEmpresa) VALUES ('${nomeEstufa}', '${tamanho}', ${minTemp}, ${baixaTemp}, ${tempNormal}, ${altaTemp}, ${maxTemp}, ${minUmidade}, ${baixaUmidade}, ${umidNormal}, ${altaUmidade}, ${maxUmidade}, ${fkEmpresa});
+    `;
+    console.log("Executando a instrução SQL: \n " + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     entrarUsuario,
     entrarEmpresa,
@@ -80,4 +89,5 @@ module.exports = {
     buscarEstufas,
     ultimoRegistroEstufa,
     listar,
+    cadastrarEstufa
 };

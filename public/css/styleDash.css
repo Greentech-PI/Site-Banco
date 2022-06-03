@@ -822,3 +822,38 @@ depois dizemos que a box shadow vai ser none, ou seja sem valor 0 0 0 0 ;
   font-size: 16px;
   cursor: pointer;
 }
+
+/* Inicio Cadastro Estufa */
+
+.linhaCadastro{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.colunaLinhaCadastro{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.labelCadastroEstufa{
+  font-size: 20px;
+  /* padding-left: 50px; */
+  margin-top: 15px;
+  text-align: center;
+}
+
+.inputCadastroEstufa{
+    width: 50%;
+    margin-top: 10px;
+    /* margin-left: 50px; */
+    border: none;
+    /* padding: 10px; */
+    font-size: 16px;
+    border-bottom: solid 2px #555555; 
+}
+
+/* Fim Cadastro Estufa */

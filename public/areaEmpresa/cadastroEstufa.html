@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="../css/styleDash.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+	<!-- Div main é todo o corpo do pagina (tudo)-->
+
+	<div class="main">
+		<!-- Barra de navegação lateral-->
+
+		<div class="navbar">
+			<ul>
+				<h4 class="item-navbar" id="greenName">Greentech</h4>
+				<img id='img_user' src="../assets/imgs/user.jpg" alt="" class="item-navbar">
+				<h5 class="item-navbar" id="username"></h5>
+				<p class="item-navbar" id="cargo">Gerente de vendas</p>
+				<li class="item-navbar" id="aqui">Dashboard</li>
+			    <a href="grafico.html">	<li class="item-navbar" >Estufas</li> </a>
+				<li class="item-navbar">Contato</li>
+                <a href="cadastroUser.html"><li class="item-navbar">Cadastrar Func</li></a>
+				<a href="cadastroEstufa.html"><li class="item-navbar">Cadastrar Estufa</li></a>
+			</ul>
+		</div>
+
+			<!-- Div container é tudo que ficou na parte da box -->
+
+			<div class="container">
+
+				<div class="formCadastroUser">
+					<h1 class="tituloCadastroUser">Cadastrar Estufa</h1>
+					<p class="labelCadastroUser">Nome da Estufa:</p>
+					<input id="inpNome" placeholder="Ex: Estufa Red 01" class="inputCadastroUser">
+					<p class="labelCadastroUser">Tamanho:</p>
+					<input id="inpTamanho" placeholder="Ex: 1 Hec" class="inputCadastroUser">
+                    <div class="linhaCadastro">
+                        <div class="colunaLinhaCadastro">
+                            <p class="labelCadastroEstufa">Temperatura Mínima:</p>
+                            <input id="inpTempMinima" placeholder="Ex: 14" class="inputCadastroEstufa" type="text">
+                        </div>
+                        <div class="colunaLinhaCadastro">
+                            <p class="labelCadastroEstufa">Temperatura<br>Baixa:</p>
+                            <input id="inpTempBaixa" placeholder="Ex: 18" class="inputCadastroEstufa" type="text">
+                        </div>
+                        <div class="colunaLinhaCadastro">
+                            <p class="labelCadastroEstufa">Temperatura Normal:</p>
+                            <input id="inpTempNormal" placeholder="Ex: 22" class="inputCadastroEstufa" type="text">
+                        </div>
+                        <div class="colunaLinhaCadastro">
+                            <p class="labelCadastroEstufa">Temperatura<br>Alta:</p>
+                            <input id="inpTempAlta" placeholder="Ex: 26" class="inputCadastroEstufa" type="text">
+                        </div>
+                        <div class="colunaLinhaCadastro">
+                            <p class="labelCadastroEstufa">Temperatura Máxima:</p>
+                            <input id="inpTempMaxima" placeholder="Ex: 28" class="inputCadastroEstufa" type="text">
+                        </div>
+                    </div>
+                    <div class="linhaCadastro">
+                        <div class="colunaLinhaCadastro">
+                            <p class="labelCadastroEstufa">Umidade Mínima:</p>
+                            <input id="inpUmidMinima" placeholder="Ex: 65" class="inputCadastroEstufa" type="text">
+                        </div>
+                        <div class="colunaLinhaCadastro">
+                            <p class="labelCadastroEstufa">Umidade Baixa:</p>
+                            <input id="inpUmidBaixa" placeholder="Ex: 72" class="inputCadastroEstufa" type="text">
+                        </div>
+                        <div class="colunaLinhaCadastro">
+                            <p class="labelCadastroEstufa">Umidade Normal:</p>
+                            <input id="inpUmidNormal" placeholder="Ex: 78" class="inputCadastroEstufa" type="text">
+                        </div>
+                        <div class="colunaLinhaCadastro">
+                            <p class="labelCadastroEstufa">Umidade Alta:</p>
+                            <input id="inpUmidAlta" placeholder="Ex: 88" class="inputCadastroEstufa" type="text">
+                        </div>
+                        <div class="colunaLinhaCadastro">
+                            <p class="labelCadastroEstufa">Umidade Máxima:</p>
+                            <input id="inpUmidMaxima" placeholder="Ex: 93" class="inputCadastroEstufa" type="text">
+                        </div>
+                    </div>
+					<button onclick="confirm()" class="buttonCadastroUser">Cadastrar</button>
+				</div>
+
+			</div>
+	</div>
+</body>
+</html>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+
+	function key(){
+        if(event.key === 'Enter'){
+        return confirm()
+
+        }else{}
+    }
+
+    function confirm(){
+        
+        // Variaveis dos valores dos inputs 
+
+        var nameVar = inpNome.value;
+        var tamanhoVar = inpTamanho.value;
+        var tempMinima = Number(inpTempMinima.value);
+        var tempBaixa  = Number(inpTempBaixa.value);
+        var tempNormal = Number(inpTempNormal.value);
+        var tempAlta = Number(inpTempAlta.value);
+        var tempMaxima = Number(inpTempMaxima.value);
+        var umidMinima = Number(inpUmidMinima.value);
+        var umidBaixa = Number(inpUmidBaixa.value);
+        var umidNormal = Number(inpUmidNormal.value);
+        var umidAlta = Number(inpUmidAlta.value);
+        var umidMaxima = Number(inpUmidMaxima.value);
+
+		var idEmpresaVar = sessionStorage.getItem('ID_EMPRESA');
+        
+
+        if (nameVar == '' || tamanhoVar == '' || tempMinima == 0 || tempBaixa == 0 || tempNormal == 0 || tempAlta == 0 || tempMaxima == 0 || umidMinima == 0 || umidBaixa == 0 || umidNormal == 0 || umidAlta == 0 || umidMaxima == 0){
+
+            //INNERHtml Comentado para usar os alerts personalizados, caso queira trocar apenas comente o bloco do Swal.fire e descomente o bloco abaixo
+
+            /*
+            span_error.innerHTML = 'Você precisa preencher todos os campos';
+            span_error.style.color = 'red';
+            */
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Cadastro falhou!',
+                text: 'Você precisa preencher todos os campos para prosseguir'
+            });
+
+        }else {
+            fetch("/usuarios/cadastrarEstufa", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    // crie um atributo que recebe o valor recuperado aqui
+                    // Agora vá para o arquivo routes/usuario.js
+                    nomeServer: nameVar,
+                    tamanhoServer: tamanhoVar,
+                    tempMinimaServer: tempMinima,
+                    tempBaixaServer: tempBaixa,
+                    tempNormalServer: tempNormal,
+                    tempAltaServer: tempAlta,
+                    tempMaximaServer: tempMaxima,
+                    umidMinimaServer: umidMinima,
+                    umidBaixaServer: umidBaixa,
+                    umidNormalServer: umidNormal,
+                    umidAltaServer: umidAlta,
+                    umidMaximaServer: umidMaxima,
+                    fkEmpresaServer: idEmpresaVar
+                })
+            }).then(function (resposta) {
+
+                console.log("resposta: ", resposta);
+
+                if (resposta.ok) {
+                    Swal.fire({
+                        title: 'Tudo Certo!',
+                        html: 'Cadastro realizado com sucesso!',
+                        icon: 'success',
+                        footer: '<a href="dashboardEmpresa.html">Ver Estufa</a>',
+                        timer: 7000
+                    });
+					inpNome.value = '';
+                    inpTamanho.value = '';
+                    inpTempMinima.value = '';
+                    inpTempBaixa.value = '';
+                    inpTempNormal.value = '';
+                    inpTempAlta.value = '';
+                    inpTempMaxima.value = '';
+                    inpUmidMinima.value = '';
+                    inpUmidBaixa.value = '';
+                    inpUmidNormal.value = '';
+                    inpUmidAlta.value = '';
+                    inpUmidMaxima.value = '';
+                } else {
+                    throw ("Houve um erro ao tentar realizar o cadastro!");
+                }
+            }).catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                // finalizarAguardar();
+            });
+
+            return false;
+        }
+    }
+
+</script>
+
+<script>
+
+	username.innerHTML = `${sessionStorage.getItem('NOME_REPRESENTANTE')}`;
+
+</script>

@@ -341,10 +341,6 @@ fetch("/medidas/buscarEstufaRecorrente").then(function (response){
 					texto_umid.innerHTML = `${estufa.dht11_umidade}%`;
 					texto_estufa_nome.innerHTML = `${estufa.nomeEstufa}`;
 
-					if(estufa.dht11_temperatura > 20){
-						alert("FOGO");
-					}
-
 					div_metrica.className = "div-metrica";
 					div_estufa_nome.className = "div-estufa-name";
 					div_temp.className = "temp";

@@ -29,14 +29,18 @@ create table Estufa
 	(
     fkEmpresa int,
 	foreign key (fkEmpresa) references Empresa(idEmpresa),
-	idEstufa int,
-	primary key(fkEmpresa, idEstufa),
+	idEstufa int primary key auto_increment,
     nomeEstufa varchar (45),
     tamanho varchar (45),
-	tipo varchar (45),
 	minTemp decimal (5,2),
+    baixaTemp decimal(5,2),
+    altaTemp decimal(5,2),
     maxTemp decimal (5,2),
+    tempNormal decimal (5,2),
+    umidNormal decimal (5,2),
 	minUmidade decimal (5,2),
+    baixaUmidade decimal (5,2),
+    altaUmidade decimal (5,2),
     maxUmidade decimal (5,2)
 	);
 
@@ -57,11 +61,10 @@ create table MonitoramentoSensor
     
 -- CRIANDO TABELA DE ALERTAS QUE SERÃO MOSTRADOS NA DASHBOARD --
 create table Alerta (
-	idAlerta int,
+	idAlerta int primary key auto_increment,
 	fkMonitoramento int,
     tipoAlerta varchar (45),
-	foreign key (fkMonitoramento) references MonitoramentoSensor (idMonitoramento),
-    primary key (idAlerta, fkMonitoramento)
+	foreign key (fkMonitoramento) references MonitoramentoSensor (idMonitoramento)
 );
 
 
@@ -73,8 +76,36 @@ select * from sensor;
 insert into empresa (nomeEmpresa, CNPJ, nomeRepresentante, senha)
 	values ('New Tomato', '38958816000103', 'Carlos', '123');
 
+insert into Estufa (fkEmpresa, nomeEstufa, tamanho, minTemp, maxTemp, baixaTemp, altaTemp, minUmidade, maxUmidade, baixaUmidade, altaUmidade, tempNormal, umidNormal)
+	VALUES (500, 'Estufa Red 01', '2 Hec', 14.00, 25.00, 18.00, 23.00, 65.00, 95.00, 70.00, 84.00,  21.00, 78.00);
+    
+SELECT nomeEstufa, minTemp, baixaTemp, tempNormal, altaTemp, maxTemp, minUmidade, baixaUmidade, umidNormal, altaUmidade, maxUmidade FROM Estufa WHERE idEstufa = 1;
+
+insert into empresa (nomeEmpresa, CNPJ, nomeRepresentante, senha)
+	values ('New Tomato', '38958816000103', 'Carlos', '123');
+
 insert into Estufa (fkEmpresa, idEstufa, nomeEstufa, tamanho, tipo, minTemp, maxTemp, minUmidade, maxUmidade)
 	VALUES (500, 1, 'Estufa Red 01', '2 Hec', 'Tomate-Cereja', 14.00, 25.00, 65.00, 95.00);
+    
+insert into Estufa (fkEmpresa, idEstufa, nomeEstufa, tamanho, tipo, minTemp, maxTemp, minUmidade, maxUmidade)
+	VALUES (500, 2, 'Estufa Red 02', '3 Hec', 'Tomate-Cereja', 14.00, 25.00, 65.00, 95.00);
+    
+insert into Estufa (fkEmpresa, idEstufa, nomeEstufa, tamanho, tipo, minTemp, maxTemp, minUmidade, maxUmidade)
+	VALUES (500, 3, 'Estufa Red 03', '1 Hec', 'Tomate-Cereja', 14.00, 25.00, 65.00, 95.00);
+    
+insert into MonitoramentoSensor(dht11_temperatura, dht11_umidade, momento, fkEmpresa, fkEstufa)
+	VALUES (23.00, 82.00, now(), 500, 1);
+    
+insert into MonitoramentoSensor(dht11_temperatura, dht11_umidade, momento, fkEmpresa, fkEstufa)
+	VALUES (21.00, 84.00, now(), 500, 1);
+    
+insert into MonitoramentoSensor(dht11_temperatura, dht11_umidade, momento, fkEmpresa, fkEstufa)
+	VALUES (17.00, 89.00, now(), 500, 1);
+    
+select * from monitoramentosensor;
+
+SELECT nomeEstufa, minTemp, baixaTemp, tempNormal, altaTemp, maxTemp, minUmidade, baixaUmidade, umidNormal, altaUmidade, maxUmidade FROM Estufa WHERE idEstufa = 1;
+
     
 /*
     

@@ -36,4 +36,8 @@ router.post("/autenticarUsuario", function (req, res) {
     usuarioController.entrarUsuario(req, res);
 });
 
+router.post("/cadastrarEstufa", function (req, res){
+    usuarioController.cadastrarEstufa(req, res);
+});
+
 module.exports = router;
