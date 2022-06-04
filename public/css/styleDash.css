@@ -488,6 +488,19 @@ depois dizemos que a box shadow vai ser none, ou seja sem valor 0 0 0 0 ;
 
 }
 
+.metricaCritica{
+  color: red;
+  font-weight: bold;
+}
+
+.metricaAlerta{
+  color: orange;
+}
+
+.metricaNormal{
+  
+}
+
 .boxes-metrica .div-metrica .umidade {
   display: flex;
   width: 10vh;

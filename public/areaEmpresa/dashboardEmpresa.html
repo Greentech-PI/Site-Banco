@@ -20,11 +20,11 @@
 				<img id='img_user' src="../assets/imgs/Basic_Ui_(186).jpg" alt="" class="item-navbar">
 				<h5 class="item-navbar" id="username"></h5>
 				<p class="item-navbar" id="cargo">Gerente de vendas</p>
-				<li class="item-navbar" id="aqui">Dashboard</li>
+				<a href="dashboardEmpresa.html"><li class="item-navbar" id="aqui">Dashboard</li></a>
 			    <a href="grafico.html">	<li class="item-navbar" >Estufas</li> </a>
 				<li class="item-navbar">Contato</li>
-				<li class="item-navbar">Ajustes</li>
-                <a href="cadastroUser.html"><li class="item-navbar">Cadastrar</li></a>
+                <a href="cadastroUser.html"><li class="item-navbar">Cadastrar Func</li></a>
+				<a href="cadastroEstufa.html"><li class="item-navbar">Cadastrar Estufa</li></a>
 			</ul>
 		</div>
 
@@ -227,7 +227,13 @@
 							const divAviso = document.createElement("div");
 
 							if(estufa.fkEstufa != undefined){
-								divAviso.className = "aviso-normal";
+								if(estufa.ultimaTemp <= estufa.minTemp || estufa.ultimaTemp >= estufa.maxTemp || estufa.ultimaUmidade <= estufa.minUmidade || estufa.ultimaUmidade >= estufa.maxUmidade) {
+									divAviso.className = "aviso-perigo";
+								}else if(estufa.ultimaTemp <= estufa.baixaTemp || estufa.ultimaTemp >= estufa.altaTemp || estufa.ultimaUmidade <= estufa.baixaUmidade || estufa.ultimaUmidade >= estufa.altaUmidade) {
+									divAviso.className = "aviso-cuidado";
+								}else{
+									divAviso.className = "aviso-normal";
+								}
 							}else if(estufa.fkEstufa == undefined) {
 								divAviso.className = "aviso-off";
 								estufasInativas++;
@@ -345,6 +351,22 @@ fetch("/medidas/buscarEstufaRecorrente").then(function (response){
 					div_estufa_nome.className = "div-estufa-name";
 					div_temp.className = "temp";
 					div_umid.className = "umidade";
+
+					if(estufa.dht11_temperatura <= estufa.minTemp || estufa.dht11_temperatura >= estufa.maxTemp) {
+						texto_temp.className = "metricaCritica";
+					}else if(estufa.dht11_temperatura <= estufa.baixaTemp || estufa.dht11_temperatura >= estufa.altaTemp) {
+						texto_temp.className = "metricaAlerta";
+					}else{
+						texto_temp.className = "metricaNormal";
+					}
+
+					if(estufa.dhtt_umidade <= estufa.minUmidade || estufa.dht11_umidade >= estufa.maxUmidade){
+						texto_umid.className = "metricaCritica";
+					}else if(estufa.dht11_umidade <= estufa.baixaUmidade || estufa.dht11_umidade >= estufa.altaUmidade){
+						texto_umid.className = "metricaAlerta";
+					}else{
+						texto_umid.className = "metricaNormal";
+					}
 
 					div_estufa_nome.appendChild(texto_estufa_nome);
 					div_temp.appendChild(texto_temp);

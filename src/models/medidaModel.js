@@ -35,7 +35,7 @@ function buscarEstufaProblema(){
 
 function buscarEstufaRecorrente(){
     var instrucaoSql = `
-        select nomeEstufa, count(idMonitoramento) as 'qtdeRegistros' from monitoramentosensor inner join estufa on estufa.idEstufa = monitoramentosensor.fkestufa group by nomeEstufa;
+    select nomeEstufa, count(idMonitoramento) as 'qtdeRegistros' from monitoramentosensor inner join estufa on estufa.idEstufa = monitoramentosensor.fkestufa WHERE dht11_temperatura > maxTemp OR dht11_temperatura < minTemp OR dht11_umidade > maxUmidade OR dht11_umidade < minUmidade group by nomeEstufa;
     `;
     console.log("Executando a instrução SQL: \n " + instrucaoSql);
     return database.executar(instrucaoSql);
