@@ -901,3 +901,15 @@ depois dizemos que a box shadow vai ser none, ou seja sem valor 0 0 0 0 ;
 }
 
 /* Fim Tela Alertas */
+
+.navbar button{
+  margin-top: 10px;
+  width: 25%;
+  color: white;
+  background-color: #3367A1;
+  height: 40px;
+  border: 0;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+}
