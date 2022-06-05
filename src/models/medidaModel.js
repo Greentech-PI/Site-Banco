@@ -49,11 +49,30 @@ function buscarMetricasEstufa(idEstufa){
     return database.executar(instrucaoSql);
 }
 
+function novoAlerta(tipoAlerta, fkMonitoramento) {
+    var instrucaoSql = `
+        INSERT INTO Alerta (tipoAlerta, fkMonitoramento)
+	        VALUES ('${tipoAlerta}', ${fkMonitoramento});
+    `;
+    console.log("Executando a instrução SQL \n " + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function selecionarAlertas(fkEmpresa){
+    var instrucaoSql = `
+        SELECT * FROM Alerta INNER JOIN MonitoramentoSensor ON MonitoramentoSensor.idMonitoramento = Alerta.fkMonitoramento INNER JOIN Estufa ON MonitoramentoSensor.fkEstufa = Estufa.idEstufa WHERE Estufa.fkEmpresa = ${fkEmpresa};
+    `;
+    console.log("Executando a instrução SQL \n " + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal,
     buscarEstufaProblema,
     buscarEstufaRecorrente,
-    buscarMetricasEstufa
+    buscarMetricasEstufa,
+    novoAlerta,
+    selecionarAlertas
 }

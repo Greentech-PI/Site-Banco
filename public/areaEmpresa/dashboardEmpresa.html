@@ -19,9 +19,10 @@
 				<h4 class="item-navbar" id="greenName">Greentech</h4>
 				<img id='img_user' src="../assets/imgs/Basic_Ui_(186).jpg" alt="" class="item-navbar">
 				<h5 class="item-navbar" id="username"></h5>
-				<p class="item-navbar" id="cargo">Gerente de vendas</p>
+				<p class="item-navbar" id="cargo">Representante</p>
 				<a href="dashboardEmpresa.html"><li class="item-navbar" id="aqui">Dashboard</li></a>
 			    <a href="grafico.html">	<li class="item-navbar" >Estufas</li> </a>
+				<a href="alertas.html"><li class="item-navbar">Alertas</li></a>
 				<li class="item-navbar">Contato</li>
                 <a href="cadastroUser.html"><li class="item-navbar">Cadastrar Func</li></a>
 				<a href="cadastroEstufa.html"><li class="item-navbar">Cadastrar Estufa</li></a>
@@ -354,16 +355,44 @@ fetch("/medidas/buscarEstufaRecorrente").then(function (response){
 
 					if(estufa.dht11_temperatura <= estufa.minTemp || estufa.dht11_temperatura >= estufa.maxTemp) {
 						texto_temp.className = "metricaCritica";
+						if(estufa.dht11_temperatura <= estufa.minTemp){
+							novoAlerta('Temperatura Extremamente Baixa', estufa.idMonitoramento);
+						}else if(estufa.dht11_temperatura >= estufa.maxTemp){
+							novoAlerta('Temperatura Extremamente Alta', estufa.idMonitoramento);
+						}else{
+							console.log("ERRRROOOOOO");
+						}
 					}else if(estufa.dht11_temperatura <= estufa.baixaTemp || estufa.dht11_temperatura >= estufa.altaTemp) {
 						texto_temp.className = "metricaAlerta";
+						if(estufa.dht11_temperatura <= estufa.baixaTemp){
+							novoAlerta('Temperatura Baixa', estufa.idMonitoramento);
+						}else if(estufa.dht11_temperatura >= estufa.altaTemp){
+							novoAlerta('Temperatura Alta', estufa.idMonitoramento);
+						}else{
+							console.log("ERRRROOOOOO");
+						}
 					}else{
 						texto_temp.className = "metricaNormal";
 					}
 
 					if(estufa.dhtt_umidade <= estufa.minUmidade || estufa.dht11_umidade >= estufa.maxUmidade){
 						texto_umid.className = "metricaCritica";
+						if(estufa.dhtt_umidade <= estufa.minUmidade ){
+							novoAlerta('Umidade Extremamente Baixa', estufa.idMonitoramento);
+						}else if(estufa.dht11_umidade >= estufa.maxUmidade){
+							novoAlerta('Umidade Extremamente Alta', estufa.idMonitoramento);
+						}else{
+							console.log("ERRRROOOOOO");
+						}
 					}else if(estufa.dht11_umidade <= estufa.baixaUmidade || estufa.dht11_umidade >= estufa.altaUmidade){
 						texto_umid.className = "metricaAlerta";
+						if(estufa.dht11_umidade <= estufa.baixaUmidade){
+							novoAlerta('Umidade Baixa', estufa.idMonitoramento);
+						}else if(estufa.dht11_umidade >= estufa.altaUmidade){
+							novoAlerta('Umidade Alta', estufa.idMonitoramento);
+						}else{
+							console.log("ERRRROOOOOO");
+						}
 					}else{
 						texto_umid.className = "metricaNormal";
 					}
@@ -385,5 +414,32 @@ fetch("/medidas/buscarEstufaRecorrente").then(function (response){
 	}).catch(function (resposta) {
 		console.error(resposta);
 	});
+
+</script>
+
+<script>
+
+	function novoAlerta(tipoAlerta, fkMonitoramento){
+		fetch("/medidas/novoAlerta", {
+			method: "POST",
+			headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    tipoAlerta: tipoAlerta,
+					fkMonitoramento: fkMonitoramento
+                })
+		}).then(function (resposta){
+			console.log(resposta);
+
+			if(resposta.ok){
+				console.log("Novo alerta cadastrado")
+			}else {
+                throw ("Houve um erro ao tentar cadastrar alerta!");
+            }
+		}).catch(function (resposta) {
+            console.log(`ERRO: ${resposta}`);
+        });
+	}
 
 </script>

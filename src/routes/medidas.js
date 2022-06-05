@@ -15,12 +15,20 @@ router.get("/buscarMetricasEstufa/:idEstufa", function (req, res) {
     medidaController.buscarMetricasEstufa(req, res);
 });
 
+router.get("/selecionarAlertas/:fkEmpresa", function (req, res){
+    medidaController.selecionarAlertas(req, res);
+});
+
 router.get("/buscarEstufaProblema", function (req, res) {
     medidaController.buscarEstufaProblema(req, res);
 });
 
 router.get("/buscarEstufaRecorrente", function (req, res){
     medidaController.buscarEstufaRecorrente(req, res);
+});
+
+router.post("/novoAlerta", function (req, res) {
+    medidaController.novoAlerta(req, res);
 });
 
 module.exports = router;

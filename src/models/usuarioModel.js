@@ -66,7 +66,7 @@ function ultimoRegistroEstufa(fkEmpresa){
     console.log("ACESSEI O USUARIO MODnEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function ultimoRegistroEstufa(): ", fkEmpresa)
 
     var instrucao = `
-    select distinct nomeEstufa, idEstufa, minTemp, baixaTemp, tempNormal, altaTemp, maxTemp, minUmidade, baixaUmidade, umidNormal, altaUmidade, maxUmidade, fkEstufa, dht11_temperatura, dht11_umidade from MonitoramentoSensor right join Estufa ON MonitoramentoSensor.fkEstufa = Estufa.idEstufa AND Estufa.fkEmpresa = ${fkEmpresa} where momento = (select max(momento) from monitoramentosensor);
+    select distinct nomeEstufa, idEstufa, minTemp, baixaTemp, tempNormal, altaTemp, maxTemp, minUmidade, baixaUmidade, umidNormal, altaUmidade, maxUmidade, fkEstufa, idMonitoramento, dht11_temperatura, dht11_umidade from MonitoramentoSensor right join Estufa ON MonitoramentoSensor.fkEstufa = Estufa.idEstufa AND Estufa.fkEmpresa = ${fkEmpresa} where momento = (select max(momento) from monitoramentosensor);
     `;
     console.log("Executando a instrução SQL: \n " + instrucao);
     return database.executar(instrucao);

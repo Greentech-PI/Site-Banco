@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="../css/styleDash.css">
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+	<!-- Div main é todo o corpo do pagina (tudo)-->
+
+	<div class="main">
+		<!-- Barra de navegação lateral-->
+
+		<div class="navbar">
+			<ul>
+				<h4 class="item-navbar" id="greenName">Greentech</h4>
+				<img id='img_user' src="../assets/imgs/Basic_Ui_(186).jpg" alt="" class="item-navbar">
+				<h5 class="item-navbar" id="username"></h5>
+				<p class="item-navbar" id="cargo">Representante</p>
+				<a href="dashboardEmpresa.html"><li class="item-navbar" id="aqui">Dashboard</li></a>
+			    <a href="grafico.html">	<li class="item-navbar" >Estufas</li> </a>
+				<li class="item-navbar">Alertas</li>
+				<li class="item-navbar">Contato</li>
+                <a href="cadastroUser.html"><li class="item-navbar">Cadastrar Func</li></a>
+				<a href="cadastroEstufa.html"><li class="item-navbar">Cadastrar Estufa</li></a>
+			</ul>
+		</div>
+
+			<!-- Div container é tudo que ficou na parte da box -->
+
+			<div class="container alertas">
+
+				<div class="titulosAlertas">
+				    <h1 id="nomeEmpresa">Fazenda Carabellum</h1>
+                    <h2>Alertas</h2>
+                </div>
+                <div class="box-data">
+
+					<!--Fazendo a parte das informações numéricas-->
+
+					<!--Div Principal-->
+					<div class="boxes-metrica" id="tabelaTempoReal">
+
+
+						<div class="titulos"><p>Estufa</p><p>Motivo</p><p>Momento</p></div>
+
+<!-- 
+						<div class="div-metrica">
+							<div class="div-estufa-name"><p style="color: red; font-weight: bold;">Leste</p></div>
+							<div class="temp"><p style="color: red; font-weight: bold;">27.4 °C</p></div>
+							<div class="umidade"> <p>71%</p></div>
+						</div>
+					
+
+						<div class="div-metrica">
+						<div class="div-estufa-name"><p style="color: rgb(255, 123, 0); font-weight: bold;">Leste II</p></div>
+						<div class="temp"><p>22.7 °C</p></div>
+						<div class="umidade"> <p style="color: rgb(255, 123, 0); font-weight: bold;">65%</p></div>
+						</div>
+					
+						<div class="div-metrica">
+						<div class="div-estufa-name"><p>Norte</p></div>
+						<div class="temp"><p>20.2 °C</p></div>
+						<div class="umidade"> <p>72%</p></div>
+						</div>
+
+						<div class="div-metrica">
+						<div class="div-estufa-name"><p>Sul</p></div>
+						<div class="temp"><p>21.5 °C</p></div>
+						<div class="umidade"> <p>75%</p></div>
+						</div>
+
+						<div class="div-metrica">
+						<div class="div-estufa-name"><p>Norte II</p></div>
+						<div class="temp"><p>22.2 °C</p></div>
+						<div class="umidade"> <p>79%</p></div>
+						</div>
+
+						<div class="div-metrica">
+						<div class="div-estufa-name"><p>Sul II</p></div>
+						<div class="temp"><p>24.8 °C</p></div>
+						<div class="umidade"> <p>76%</p></div>
+						</div>
+
+						<div class="div-metrica">
+						<div class="div-estufa-name"><p>Oeste</p></div>
+						<div class="temp"><p>21.1 °C</p></div>
+						<div class="umidade"> <p>78%</p></div>
+						</div>
+
+						<div class="div-metrica">
+						<div class="div-estufa-name"><p style="color: rgb(158, 158, 158);">Leste III</p></div>
+						<div class="temp"><p style="color: rgb(158, 158, 158);">0 °C</p></div>
+						<div class="umidade"> <p style="color: rgb(158, 158, 158);">0%</p></div>
+						</div>
+
+						<div class="div-metrica">
+						<div class="div-estufa-name"><p style="color: rgb(158, 158, 158);">Oeste II</p></div>
+						<div class="temp"><p style="color: rgb(158, 158, 158);">0 °C</p></div>
+						<div class="umidade"> <p style="color: rgb(158, 158, 158);">0%</p></div>
+						</div>  -->
+
+							
+					
+					</div>
+
+
+			    </div>
+
+				<!-- Colocando as métricas de forma numérica -->
+				
+				
+				<!-- <div class="num-metrica">
+
+					<div class="num-metrica-green">
+						<p style="color: green; font-weight: 700;">12 °C</p>
+						<p style="color: green; font-weight: 700;">36%</p>					
+					</div>
+
+					<div class="num-metrica-green">
+						<p style="color: orange; font-weight: 700;">12 °C</p>
+						<p style="color: orange; font-weight: 700;">36%</p>
+					</div>
+
+					<div class="num-metrica-green">
+						<p style="color: red; font-weight: 700;">12 °C</p>
+						<p style="color: red; font-weight: 700;">36%</p>
+					</div>
+
+					<div class="num-metrica-green">
+						<p style="color: grey; font-weight: 700;">0 °C</p>
+						<p style="color: grey; font-weight: 700;">0%</p>
+					</div>
+				</div> -->
+			
+
+			</div>
+			
+				<!--Primeiras caixas para informaçoes gerais-->
+
+				<!--Div das box com os dados precisos do dashboard-->
+				<!-- Limite de caracteres da nome da estufa é 11-->
+				
+	</div>
+</body>
+</html>
+
+<script>
+
+    var fkEmpresa = sessionStorage.getItem("ID_EMPRESA");
+
+    fetch(`/medidas/selecionarAlertas/${fkEmpresa}`,  { cache: 'no-store' }).then(function (response) {
+        if(response.ok){
+            response.json().then(function (alertas) {
+                console.log(`Dados recebidos: ${JSON.stringify(alertas)}`);
+
+                for(var i = 0; i < alertas.length; i++){
+                    var alerta = alertas[i];
+                    var divEstufa = document.createElement("div");
+                    var divEstufaNome = document.createElement("div");
+                    var divMotivo = document.createElement("div");
+                    var divMomento = document.createElement("div");
+                    var textoEstufaNome = document.createElement("p");
+                    var textoMotivo = document.createElement("p");
+                    var textoMomento = document.createElement("p");
+
+                    textoEstufaNome.innerHTML = alerta.nomeEstufa;
+                    textoMotivo.innerHTML = alerta.tipoAlerta;
+                    textoMomento.innerHTML = alerta.momento;
+
+                    divEstufa.className = "div-metrica";
+                    divEstufaNome.className = "div-estufa-nome";
+                    divMotivo.className = "div-estufa-nome";
+                    divMomento.className = "div-estufa-nome";
+
+                    divMomento.appendChild(textoMomento);
+                    divMotivo.appendChild(textoMotivo);
+                    divEstufaNome.appendChild(textoEstufaNome);
+
+                    divEstufa.appendChild(divEstufaNome);
+                    divEstufa.appendChild(divMotivo);
+                    divEstufa.appendChild(divMomento);
+
+                    tabelaTempoReal.appendChild(divEstufa);
+                }
+            });
+        }
+    })
+
+</script>
