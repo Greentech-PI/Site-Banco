@@ -88,21 +88,21 @@
 						<img src="../assets/imgs/greenhouse.png">
 						<div class="text">
 						<p>Estufas inativas</p>
-						<h4 id="txtKpiEstufasInativas">2</h4>
+						<h4 id="txtKpiEstufasInativas">-</h4>
 					    </div>    
 				    </div>
 					<div class="box">
 						<img src="../assets/imgs/warning.png">
 						<div class="text">
 						<p>Cuidado necessário</p>
-						<h4 style="color: rgb(185, 31, 31);" id="txtKpiCuidadoNecessario">Leste</h4>
+						<h4 style="color: rgb(185, 31, 31);" id="txtKpiCuidadoNecessario">-</h4>
 					    </div>
 					</div>
 					<div class="box">
 						<img src="../assets/imgs/house.png">
 						<div class="text">
 						<p style="font-size: 13px;">Maior tempo de alarme</p> 
-						<h4 id="txtKpiEstufaRecorrente">Leste II</h4>
+						<h4 id="txtKpiEstufaRecorrente">-</h4>
 					    </div>
 					</div>
 				</div>
@@ -267,7 +267,7 @@
 
 <script>
 
-	fetch("/medidas/buscarEstufaProblema").then(function (response){
+	fetch(`/medidas/buscarEstufaProblema/${fkEmpresa}`, { cache: 'no-store' }).then(function (response){
 		if(response.ok){
 			console.log(response)
 			response.json().then(json =>  {
@@ -290,7 +290,7 @@
 
 <script>
 
-fetch("/medidas/buscarEstufaRecorrente").then(function (response){
+fetch(`/medidas/buscarEstufaRecorrente/${fkEmpresa}`, { cache: 'no-store' }).then(function (response){
 		if(response.ok){
 			console.log(response)
 			response.json().then(json =>  {

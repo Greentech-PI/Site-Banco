@@ -19,11 +19,11 @@ router.get("/selecionarAlertas/:fkEmpresa", function (req, res){
     medidaController.selecionarAlertas(req, res);
 });
 
-router.get("/buscarEstufaProblema", function (req, res) {
+router.get("/buscarEstufaProblema/:fkEmpresa", function (req, res) {
     medidaController.buscarEstufaProblema(req, res);
 });
 
-router.get("/buscarEstufaRecorrente", function (req, res){
+router.get("/buscarEstufaRecorrente/:fkEmpresa", function (req, res){
     medidaController.buscarEstufaRecorrente(req, res);
 });
 

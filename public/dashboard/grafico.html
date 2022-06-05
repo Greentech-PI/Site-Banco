@@ -18,13 +18,13 @@
 		<div class="navbar">
 			<ul>
 				<h4 class="item-navbar" id="greenName">Greentech</h4>
-				<img id='img_user' src="../assets/imgs/user.jpg" alt="" class="item-navbar">
+				<img id='img_user' src="../assets/imgs/iconUser.png" alt="" class="item-navbar">
 				<h5 class="item-navbar" id="username"></h5>
-				<p class="item-navbar" id="cargo">Gerente de vendas</p>
+				<p class="item-navbar" id="cargo">Funcionário</p>
 				<a href="dashboard.html"><li class="item-navbar">Home</li></a>
 			    <a href="grafico.html">	<li class="item-navbar" >Estufas</li> </a>
+                <a href="alertas.html"><li class="item-navbar">Alertas</li></a>
 				<a href="contato.html"><li class="item-navbar">Contato</li></a>
-				<a href="#"><li class="item-navbar">Ajustes</li></a>
 			</ul>
 		</div>
 			<!-- Div container é tudo que ficou na parte da box -->
@@ -33,7 +33,7 @@
 
 				<div class="titulos-grafico">
 					<div style="display: flex; justify-content:center; align-items:center">
-						<h1>Estufa Leste II</h1>
+						<h1 id="txtNomeEstufa">Selecione Uma Estufa</h1>
 					</div>
 					<div style="display: flex; justify-content:center; align-items:center; flex-direction: column;">
 						<div class="num-metrica">
@@ -64,34 +64,34 @@
 				<div class="num-metrica" style="margin-top: 10px">
 
 					<div class="num-metrica-green">
-						<p style="color: red; font-weight: 700;">14 °C</p>
-						<p style="color: red; font-weight: 700;">60%</p>
+						<p style="color: red; font-weight: 700;" id="txtMinTemp">-</p>
+						<p style="color: red; font-weight: 700;" id="txtMinUmid">-</p>
 					</div>
 
 					<div class="num-metrica-green">
-						<p style="color: orange; font-weight: 700;">18 °C</p>
-						<p style="color: orange; font-weight: 700;">64%</p>
+						<p style="color: orange; font-weight: 700;" id="txtBaixaTemp">-</p>
+						<p style="color: orange; font-weight: 700;" id="txtBaixaUmid">-</p>
 					</div>
 
 					<div class="num-metrica-green">
-						<p style="color: green; font-weight: 700;">21 °C</p>
-						<p style="color: green; font-weight: 700;">70%</p>
+						<p style="color: green; font-weight: 700;" id="txtTempNormal">-</p>
+						<p style="color: green; font-weight: 700;" id="txtUmidNormal">-</p>
 						
 					</div>
 
 					<div class="num-metrica-green">
-						<p style="color: orange; font-weight: 700;">25 °C</p>
-						<p style="color: orange; font-weight: 700;">77%</p>
+						<p style="color: orange; font-weight: 700;" id="txtAltaTemp">-</p>
+						<p style="color: orange; font-weight: 700;" id="txtAltaUmid">-</p>
 					</div>
 
 					<div class="num-metrica-green">
-						<p style="color: red; font-weight: 700;">27 °C</p>
-						<p style="color: red; font-weight: 700;">80%</p>
+						<p style="color: red; font-weight: 700;" id="txtMaxTemp">-</p>
+						<p style="color: red; font-weight: 700;" id="txtMaxUmid">-</p>
 					</div>
 
 					<div class="num-metrica-green">
-						<p style="color: grey; font-weight: 700;">0 °C</p>
-						<p style="color: grey; font-weight: 700;">0%</p>
+						<p style="color: grey; font-weight: 700;">-</p>
+						<p style="color: grey; font-weight: 700;">-</p>
 					</div>
 
 				</div>
@@ -149,6 +149,118 @@
 <script>
 
 	username.innerHTML = `${sessionStorage.getItem('NOME_USUARIO')}`;
+
+</script>
+
+<script>
+
+	var fkEmpresa = sessionStorage.getItem('ID_EMPRESA');
+
+	fetch("/usuarios/buscarEstufas", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    fkEmpresa: fkEmpresa
+                })
+            }).then(function (resposta) {
+                console.log("ESTOU NO THEN DO buscarEmpresa()!");
+
+                if (resposta.ok) {
+					
+				
+					console.log(resposta);
+
+					resposta.json().then(json => {
+						console.log(json);
+						console.log(JSON.stringify(json));
+						var contadorId = 1;
+						for(var i = 0; i < json.length; i++){
+							var estufa = json[i];
+
+							const divEstufa = document.createElement("div");
+							const nomeEstufa = document.createElement("p");
+							const divAviso = document.createElement("div");
+
+							if(estufa.fkEstufa != undefined){
+								if(estufa.ultimaTemp <= estufa.minTemp || estufa.ultimaTemp >= estufa.maxTemp || estufa.ultimaUmidade <= estufa.minUmidade || estufa.ultimaUmidade >= estufa.maxUmidade) {
+									divAviso.className = "aviso-perigo";
+								}else if(estufa.ultimaTemp <= estufa.baixaTemp || estufa.ultimaTemp >= estufa.altaTemp || estufa.ultimaUmidade <= estufa.baixaUmidade || estufa.ultimaUmidade >= estufa.altaUmidade) {
+									divAviso.className = "aviso-cuidado";
+								}else{
+									divAviso.className = "aviso-normal";
+								}
+							}else if(estufa.fkEstufa == undefined) {
+								divAviso.className = "aviso-off";
+							}
+
+							divEstufa.className = "div-estufas";
+
+							nomeEstufa.innerHTML = `${estufa.nomeEstufa}`;
+
+							divEstufa.id = `${estufa.idEstufa}`;
+							nomeEstufa.id = `${estufa.idEstufa}`;
+							divAviso.id = `${estufa.idEstufa}`;
+
+							console.log(estufa.idEstufa);
+
+							divEstufa.appendChild(nomeEstufa);
+							divEstufa.appendChild(divAviso);
+
+							corpo_pesquisaEstufas.appendChild(divEstufa);
+						}
+					});
+					
+				}
+			else {
+				throw ('Houve um erro na API!');
+			}
+
+	}).catch(function (resposta) {
+		console.error(resposta);
+	});
+
+
+</script>
+
+<script>
+
+	var corpoEstufa = document.getElementById("corpo_pesquisaEstufas");
+
+	corpoEstufa.addEventListener("click", function(e) {
+		var idEstufa = e.target.id;
+		sessionStorage.ID_ESTUFA = idEstufa;
+		console.log(idEstufa);
+		carregarMedidas(idEstufa);
+	});
+
+	function carregarMedidas(idEstufa){
+		fetch(`/medidas/buscarMetricasEstufa/${idEstufa}`, { cache: 'no-store' }).then(function (response) {
+			if(response.ok) {
+				response.json().then(function (metricas) {
+					console.log(`Dados recebidos: ${JSON.stringify(metricas)}`);
+
+					txtNomeEstufa.innerHTML = `${metricas[0].nomeEstufa}`;
+
+					txtMinTemp.innerHTML = `${metricas[0].minTemp}ºC`;
+					txtBaixaTemp.innerHTML = `${metricas[0].baixaTemp}ºC`;
+					txtAltaTemp.innerHTML = `${metricas[0].altaTemp}ºC`;
+					txtMaxTemp.innerHTML = `${metricas[0].maxTemp}ºC`;
+					txtTempNormal.innerHTML = `${metricas[0].tempNormal}ºC`;
+					txtMinUmid.innerHTML = `${metricas[0].minUmidade}%`;
+					txtBaixaUmid.innerHTML = `${metricas[0].baixaUmidade}%`;
+					txtAltaUmid.innerHTML = `${metricas[0].altaUmidade}%`;
+					txtMaxUmid.innerHTML = `${metricas[0].maxUmidade}%`;
+					txtUmidNormal.innerHTML = `${metricas[0].umidNormal}%`;
+				});
+			} else {
+				console.error('Nenhum dado encontrado ou erro na API');
+			}
+		})
+	}
+
+	
 
 </script>
 
@@ -547,7 +659,11 @@
 
   </script>
 
+
+
 <script>
+
+	/*
 
 	var fkEmpresa = sessionStorage.getItem('ID_EMPRESA');
 
@@ -577,8 +693,6 @@
 							const nomeEstufa = document.createElement("p");
 							const divAviso = document.createElement("div");
 
-							divEstufa.id = estufa.idEstufa;
-
 							divEstufa.className = "div-estufas";
 							divAviso.className = "aviso-off";
 
@@ -604,5 +718,7 @@
 	}).catch(function (resposta) {
 		console.error(resposta);
 	});
+
+	*/
 
 </script>

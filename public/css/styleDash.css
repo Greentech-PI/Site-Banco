@@ -896,4 +896,8 @@ depois dizemos que a box shadow vai ser none, ou seja sem valor 0 0 0 0 ;
   padding: 10px;
 }
 
+#tabelaTempoReal .div-metrica p{
+  margin-right: 25px;
+}
+
 /* Fim Tela Alertas */

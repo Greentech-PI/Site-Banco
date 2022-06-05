@@ -17,13 +17,13 @@
 		<div class="navbar">
 			<ul>
 				<h4 class="item-navbar" id="greenName">Greentech</h4>
-				<img id='img_user' src="../assets/imgs/user.jpg" alt="" class="item-navbar">
+				<img id='img_user' src="../assets/imgs/iconUser.png" alt="" class="item-navbar">
 				<h5 class="item-navbar" id="username"></h5>
-				<p class="item-navbar" id="cargo">Gerente de vendas</p>
+				<p class="item-navbar" id="cargo">Funcionário</p>
 				<a href="dashboard.html"><li class="item-navbar">Home</li></a>
 			    <a href="grafico.html">	<li class="item-navbar" >Estufas</li> </a>
+                <a href="alertas.html"><li class="item-navbar">Alertas</li></a>
 				<a href="contato.html"><li class="item-navbar">Contato</li></a>
-				<a href="#"><li class="item-navbar">Ajustes</li></a>
 			</ul>
 		</div>
 
@@ -86,21 +86,21 @@
 						<img src="../assets/imgs/greenhouse.png">
 						<div class="text">
 						<p>Estufas inativas</p>
-						<h4>2</h4>
+						<h4 id="txtKpiEstufasInativas">-</h4>
 					    </div>    
 				    </div>
 					<div class="box">
 						<img src="../assets/imgs/warning.png">
 						<div class="text">
 						<p>Cuidado necessário</p>
-						<h4 style="color: rgb(185, 31, 31);">Leste</h4>
+						<h4 style="color: rgb(185, 31, 31);" id="txtKpiCuidadoNecessario">-</h4>
 					    </div>
 					</div>
 					<div class="box">
 						<img src="../assets/imgs/house.png">
 						<div class="text">
 						<p style="font-size: 13px;">Maior tempo de alarme</p> 
-						<h4>Leste II</h4>
+						<h4 id="txtKpiEstufaRecorrente">-</h4>
 					    </div>
 					</div>
 				</div>
@@ -115,13 +115,13 @@
 					<!--Fazendo a parte das informações numéricas-->
 
 					<!--Div Principal-->
-					<div class="boxes-metrica">
+					<div class="boxes-metrica" id="tabelaTempoReal">
 
 
 						<div class="titulos"><p>Estufa</p><p>Temperatura</p><p>Umidade</p></div>
 
 
-						<div class="div-metrica">
+						<!-- <div class="div-metrica">
 						<div class="div-estufa-name"><p style="color: red; font-weight: bold;">Leste</p></div>
 						<div class="temp"><p style="color: red; font-weight: bold;">27.4 °C</p></div>
 						<div class="umidade"> <p>71%</p></div>
@@ -174,7 +174,7 @@
 						<div class="div-estufa-name"><p style="color: rgb(158, 158, 158);">Oeste II</p></div>
 						<div class="temp"><p style="color: rgb(158, 158, 158);">0 °C</p></div>
 						<div class="umidade"> <p style="color: rgb(158, 158, 158);">0%</p></div>
-						</div>
+						</div> -->
 
 							
 					
@@ -215,8 +215,9 @@
 					console.log(resposta);
 
 					resposta.json().then(json => {
-						console.log(json);
 						console.log(JSON.stringify(json));
+						var contadorId = 1;
+						var estufasInativas = 0;
 						for(var i = 0; i < json.length; i++){
 							var estufa = json[i];
 
@@ -224,8 +225,20 @@
 							const nomeEstufa = document.createElement("p");
 							const divAviso = document.createElement("div");
 
+							if(estufa.fkEstufa != undefined){
+								if(estufa.ultimaTemp <= estufa.minTemp || estufa.ultimaTemp >= estufa.maxTemp || estufa.ultimaUmidade <= estufa.minUmidade || estufa.ultimaUmidade >= estufa.maxUmidade) {
+									divAviso.className = "aviso-perigo";
+								}else if(estufa.ultimaTemp <= estufa.baixaTemp || estufa.ultimaTemp >= estufa.altaTemp || estufa.ultimaUmidade <= estufa.baixaUmidade || estufa.ultimaUmidade >= estufa.altaUmidade) {
+									divAviso.className = "aviso-cuidado";
+								}else{
+									divAviso.className = "aviso-normal";
+								}
+							}else if(estufa.fkEstufa == undefined) {
+								divAviso.className = "aviso-off";
+								estufasInativas++;
+							}
+
 							divEstufa.className = "div-estufas";
-							divAviso.className = "aviso-off";
 
 							nomeEstufa.innerHTML = `${estufa.nomeEstufa}`;
 
@@ -233,13 +246,10 @@
 							divEstufa.appendChild(divAviso);
 
 							corpo_pesquisaEstufas.appendChild(divEstufa);
-							
 						}
+						var kpiEstufaInativa = document.getElementById("txtKpiEstufasInativas");
+						kpiEstufaInativa.innerHTML = `${estufasInativas}`;
 					});
-
-					
-
-					
 					
 				}
 			else {
@@ -249,5 +259,185 @@
 	}).catch(function (resposta) {
 		console.error(resposta);
 	});
+
+
+</script>
+
+<script>
+
+	fetch(`/medidas/buscarEstufaProblema/${fkEmpresa}`, { cache: 'no-store' }).then(function (response){
+		if(response.ok){
+			console.log(response)
+			response.json().then(json =>  {
+				console.log(JSON.stringify(json));
+				for(var i = 0; i < json.length; i++){
+					var empresa = json[i];
+					var nomeEmpresa = empresa.nomeEstufa;
+					var kpiCuidadoNecessario = document.getElementById("txtKpiCuidadoNecessario");
+				kpiCuidadoNecessario.innerHTML = `${nomeEmpresa}`;	
+				}
+			}); 
+		}else {
+			console.error('Nenhum dado encontrado ou erro na API');
+		}
+	}).catch(function (error) {
+		console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+	});
+	
+</script>
+
+<script>
+
+fetch(`/medidas/buscarEstufaRecorrente/${fkEmpresa}`, { cache: 'no-store' }).then(function (response){
+		if(response.ok){
+			console.log(response)
+			response.json().then(json =>  {
+				console.log(JSON.stringify(json));
+				var qtdeAlertas = 0;
+				var nomeEstufa = '';
+				for(var i = 0; i < json.length; i++){
+					var estufa = json[i];
+					if(estufa.qtdeRegistros > qtdeAlertas){
+						nomeEstufa = estufa.nomeEstufa;
+						qtdeAlertas = estufa.qtdeRegistros;
+					}
+					var kpiEstufaRecorrente = document.getElementById("txtKpiEstufaRecorrente");
+					kpiEstufaRecorrente.innerHTML = `${nomeEstufa}`;	
+				}
+			}); 
+		}else {
+			console.error('Nenhum dado encontrado ou erro na API');
+		}
+	}).catch(function (error) {
+		console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+	});
+
+</script>
+
+<script>
+
+	fetch("/usuarios/ultimoRegistroEstufa", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			fkEmpresa: fkEmpresa
+		})
+	}).then(function (resposta) {
+		console.log("ESTOU NO THEN DO ultimoRegistroEstufa()!");
+
+		if(resposta.ok) {
+			console.log(resposta);
+			resposta.json().then(json => {
+				console.log(JSON.stringify(json));
+				var tabela =  document.getElementById("tabelaTempoReal");
+				for(var i = 0; i < json.length; i++){
+					var estufa = json[i];
+					var div_metrica = document.createElement("div");
+					var div_estufa_nome = document.createElement("div");
+					var texto_estufa_nome = document.createElement("p");
+					var div_temp = document.createElement("div");
+					var texto_temp = document.createElement("p");
+					var div_umid = document.createElement("div");
+					var texto_umid = document.createElement("p");
+					
+					texto_temp.innerHTML = `${estufa.dht11_temperatura}ºC`;
+					texto_umid.innerHTML = `${estufa.dht11_umidade}%`;
+					texto_estufa_nome.innerHTML = `${estufa.nomeEstufa}`;
+
+					div_metrica.className = "div-metrica";
+					div_estufa_nome.className = "div-estufa-name";
+					div_temp.className = "temp";
+					div_umid.className = "umidade";
+
+					if(estufa.dht11_temperatura <= estufa.minTemp || estufa.dht11_temperatura >= estufa.maxTemp) {
+						texto_temp.className = "metricaCritica";
+						if(estufa.dht11_temperatura <= estufa.minTemp){
+							novoAlerta('Temperatura Extremamente Baixa', estufa.idMonitoramento);
+						}else if(estufa.dht11_temperatura >= estufa.maxTemp){
+							novoAlerta('Temperatura Extremamente Alta', estufa.idMonitoramento);
+						}else{
+							console.log("ERRRROOOOOO");
+						}
+					}else if(estufa.dht11_temperatura <= estufa.baixaTemp || estufa.dht11_temperatura >= estufa.altaTemp) {
+						texto_temp.className = "metricaAlerta";
+						if(estufa.dht11_temperatura <= estufa.baixaTemp){
+							novoAlerta('Temperatura Baixa', estufa.idMonitoramento);
+						}else if(estufa.dht11_temperatura >= estufa.altaTemp){
+							novoAlerta('Temperatura Alta', estufa.idMonitoramento);
+						}else{
+							console.log("ERRRROOOOOO");
+						}
+					}else{
+						texto_temp.className = "metricaNormal";
+					}
+
+					if(estufa.dhtt_umidade <= estufa.minUmidade || estufa.dht11_umidade >= estufa.maxUmidade){
+						texto_umid.className = "metricaCritica";
+						if(estufa.dhtt_umidade <= estufa.minUmidade ){
+							novoAlerta('Umidade Extremamente Baixa', estufa.idMonitoramento);
+						}else if(estufa.dht11_umidade >= estufa.maxUmidade){
+							novoAlerta('Umidade Extremamente Alta', estufa.idMonitoramento);
+						}else{
+							console.log("ERRRROOOOOO");
+						}
+					}else if(estufa.dht11_umidade <= estufa.baixaUmidade || estufa.dht11_umidade >= estufa.altaUmidade){
+						texto_umid.className = "metricaAlerta";
+						if(estufa.dht11_umidade <= estufa.baixaUmidade){
+							novoAlerta('Umidade Baixa', estufa.idMonitoramento);
+						}else if(estufa.dht11_umidade >= estufa.altaUmidade){
+							novoAlerta('Umidade Alta', estufa.idMonitoramento);
+						}else{
+							console.log("ERRRROOOOOO");
+						}
+					}else{
+						texto_umid.className = "metricaNormal";
+					}
+
+					div_estufa_nome.appendChild(texto_estufa_nome);
+					div_temp.appendChild(texto_temp);
+					div_umid.appendChild(texto_umid);
+
+					div_metrica.appendChild(div_estufa_nome);
+					div_metrica.appendChild(div_temp);
+					div_metrica.appendChild(div_umid);
+
+					tabela.appendChild(div_metrica);
+				}
+			}); 
+		}else{
+			throw ('Houve um erro na API!');
+		}
+	}).catch(function (resposta) {
+		console.error(resposta);
+	});
+
+</script>
+
+<script>
+
+	function novoAlerta(tipoAlerta, fkMonitoramento){
+		fetch("/medidas/novoAlerta", {
+			method: "POST",
+			headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    tipoAlerta: tipoAlerta,
+					fkMonitoramento: fkMonitoramento
+                })
+		}).then(function (resposta){
+			console.log(resposta);
+
+			if(resposta.ok){
+				console.log("Novo alerta cadastrado")
+			}else {
+                throw ("Houve um erro ao tentar cadastrar alerta!");
+            }
+		}).catch(function (resposta) {
+            console.log(`ERRO: ${resposta}`);
+        });
+	}
 
 </script>

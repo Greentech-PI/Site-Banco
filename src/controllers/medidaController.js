@@ -44,7 +44,9 @@ function buscarMedidasEmTempoReal(req, res) {
 function buscarEstufaProblema(req, res){
     console.log(`Recuperando medidas em tempo real`);
 
-    medidaModel.buscarEstufaProblema().then(function (resultado) {
+    var fkEmpresa = req.params.fkEmpresa;
+
+    medidaModel.buscarEstufaProblema(fkEmpresa).then(function (resultado) {
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -60,7 +62,9 @@ function buscarEstufaProblema(req, res){
 function buscarEstufaRecorrente(req, res){
     console.log(`Recuperando estufas com problemas recorrentes`);
 
-    medidaModel.buscarEstufaRecorrente().then(function (resultado) {
+    var fkEmpresa = req.params.fkEmpresa;
+
+    medidaModel.buscarEstufaRecorrente(fkEmpresa).then(function (resultado) {
         if(resultado.length > 0){
             res.status(200).json(resultado);
         } else {
