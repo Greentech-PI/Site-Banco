@@ -31,8 +31,8 @@
             <h1>Faça seu login</h1>
             <br>
             <br>
-            <button class="btnOpcaoLogin"><a href="loginEmpresa.html">Empresa</a></button>
-            <button class="btnOpcaoLogin"><a href="loginUsuario.html">Usuario</a></button>
+            <button class="btnOpcaoLogin" onclick="redirecionar('Empresa')">Empresa</button>
+            <button class="btnOpcaoLogin" onclick="redirecionar('User')">Usuario</button>
             <br>
             <p>Não é cadastrado? <a class='a_class' href="cadastro.html">Cadastre-se</a></p>
             <br>
@@ -44,3 +44,19 @@
 </body>
 
 </html>
+
+
+<script>
+
+    function redirecionar(link){
+
+        if(link == 'Empresa'){
+
+            window.location = 'loginEmpresa.html';
+
+        }else if('User'){
+
+            window.location = 'loginUsuario.html'
+        }
+    }
+</script>

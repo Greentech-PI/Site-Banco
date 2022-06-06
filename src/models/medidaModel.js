@@ -27,7 +27,7 @@ function buscarMedidasEmTempoReal(idEstufa) {
 
 function buscarEstufaProblema(fkEmpresa){
     var instrucaoSql = `
-        select nomeEstufa from estufa INNER JOIN monitoramentosensor on estufa.idestufa = monitoramentosensor.fkestufa WHERE Estufa.fkEmpresa = ${fkEmpresa} AND dht11_temperatura > maxTemp OR dht11_temperatura < minTemp OR dht11_umidade > maxUmidade OR dht11_umidade < minUmidade limit 1;
+        select nomeEstufa from Estufa INNER JOIN MonitoramentoSensor on Estufa.idEstufa = MonitoramentoSensor.fkEstufa WHERE Estufa.fkEmpresa = ${fkEmpresa} AND dht11_temperatura > maxTemp OR dht11_temperatura < minTemp OR dht11_umidade > maxUmidade OR dht11_umidade < minUmidade limit 1;
     `;
     console.log("Executando a instrução SQL: \n " + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -35,7 +35,7 @@ function buscarEstufaProblema(fkEmpresa){
 
 function buscarEstufaRecorrente(fkEmpresa){
     var instrucaoSql = `
-        select nomeEstufa, count(idMonitoramento) as 'qtdeRegistros' from monitoramentosensor inner join estufa on estufa.idEstufa = monitoramentosensor.fkestufa WHERE Estufa.fkEmpresa = ${fkEmpresa} AND dht11_temperatura > maxTemp OR dht11_temperatura < minTemp OR dht11_umidade > maxUmidade OR dht11_umidade < minUmidade group by nomeEstufa;
+        select nomeEstufa, count(idMonitoramento) as 'qtdeRegistros' from MonitoramentoSensor inner join Estufa on Estufa.idEstufa = MonitoramentoSensor.fkEstufa WHERE Estufa.fkEmpresa = ${fkEmpresa} AND dht11_temperatura > maxTemp OR dht11_temperatura < minTemp OR dht11_umidade > maxUmidade OR dht11_umidade < minUmidade group by nomeEstufa;
     `;
     console.log("Executando a instrução SQL: \n " + instrucaoSql);
     return database.executar(instrucaoSql);
