@@ -319,7 +319,7 @@ fetch(`/medidas/buscarEstufaRecorrente/${fkEmpresa}`, { cache: 'no-store' }).the
 
 <script>
 
-	fetch("/usuarios/ultimoRegistroEstufa", {
+	fetch("/usuarios/buscarEstufas", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -337,6 +337,7 @@ fetch(`/medidas/buscarEstufaRecorrente/${fkEmpresa}`, { cache: 'no-store' }).the
 				var tabela =  document.getElementById("tabelaTempoReal");
 				for(var i = 0; i < json.length; i++){
 					var estufa = json[i];
+					console.log(estufa.nomeEstufa);
 					var div_metrica = document.createElement("div");
 					var div_estufa_nome = document.createElement("div");
 					var texto_estufa_nome = document.createElement("p");
@@ -345,8 +346,8 @@ fetch(`/medidas/buscarEstufaRecorrente/${fkEmpresa}`, { cache: 'no-store' }).the
 					var div_umid = document.createElement("div");
 					var texto_umid = document.createElement("p");
 					
-					texto_temp.innerHTML = `${estufa.dht11_temperatura}ºC`;
-					texto_umid.innerHTML = `${estufa.dht11_umidade}%`;
+					texto_temp.innerHTML = `${estufa.ultimaTemp}ºC`;
+					texto_umid.innerHTML = `${estufa.ultimaUmidade}%`;
 					texto_estufa_nome.innerHTML = `${estufa.nomeEstufa}`;
 
 					div_metrica.className = "div-metrica";
@@ -354,20 +355,20 @@ fetch(`/medidas/buscarEstufaRecorrente/${fkEmpresa}`, { cache: 'no-store' }).the
 					div_temp.className = "temp";
 					div_umid.className = "umidade";
 
-					if(estufa.dht11_temperatura <= estufa.minTemp || estufa.dht11_temperatura >= estufa.maxTemp) {
+					if(estufa.ultimaTemp <= estufa.minTemp || estufa.ultimaTemp >= estufa.maxTemp) {
 						texto_temp.className = "metricaCritica";
-						if(estufa.dht11_temperatura <= estufa.minTemp){
+						if(estufa.ultimaTemp <= estufa.minTemp){
 							novoAlerta('Temperatura Extremamente Baixa', estufa.idMonitoramento);
-						}else if(estufa.dht11_temperatura >= estufa.maxTemp){
+						}else if(estufa.ultimaTemp >= estufa.maxTemp){
 							novoAlerta('Temperatura Extremamente Alta', estufa.idMonitoramento);
 						}else{
 							console.log("ERRRROOOOOO");
 						}
-					}else if(estufa.dht11_temperatura <= estufa.baixaTemp || estufa.dht11_temperatura >= estufa.altaTemp) {
+					}else if(estufa.ultimaTemp <= estufa.baixaTemp || estufa.ultimaTemp >= estufa.altaTemp) {
 						texto_temp.className = "metricaAlerta";
-						if(estufa.dht11_temperatura <= estufa.baixaTemp){
+						if(estufa.ultimaTemp <= estufa.baixaTemp){
 							novoAlerta('Temperatura Baixa', estufa.idMonitoramento);
-						}else if(estufa.dht11_temperatura >= estufa.altaTemp){
+						}else if(estufa.ultimaTemp >= estufa.altaTemp){
 							novoAlerta('Temperatura Alta', estufa.idMonitoramento);
 						}else{
 							console.log("ERRRROOOOOO");
@@ -376,20 +377,20 @@ fetch(`/medidas/buscarEstufaRecorrente/${fkEmpresa}`, { cache: 'no-store' }).the
 						texto_temp.className = "metricaNormal";
 					}
 
-					if(estufa.dhtt_umidade <= estufa.minUmidade || estufa.dht11_umidade >= estufa.maxUmidade){
+					if(estufa.ultimaUmidade <= estufa.minUmidade || estufa.ultimaUmidade >= estufa.maxUmidade){
 						texto_umid.className = "metricaCritica";
-						if(estufa.dhtt_umidade <= estufa.minUmidade ){
+						if(estufa.ultimaUmidade <= estufa.minUmidade ){
 							novoAlerta('Umidade Extremamente Baixa', estufa.idMonitoramento);
-						}else if(estufa.dht11_umidade >= estufa.maxUmidade){
+						}else if(estufa.ultimaUmidade >= estufa.maxUmidade){
 							novoAlerta('Umidade Extremamente Alta', estufa.idMonitoramento);
 						}else{
 							console.log("ERRRROOOOOO");
 						}
-					}else if(estufa.dht11_umidade <= estufa.baixaUmidade || estufa.dht11_umidade >= estufa.altaUmidade){
+					}else if(estufa.ultimaUmidade <= estufa.baixaUmidade || estufa.ultimaUmidade >= estufa.altaUmidade){
 						texto_umid.className = "metricaAlerta";
-						if(estufa.dht11_umidade <= estufa.baixaUmidade){
+						if(estufa.ultimaUmidade <= estufa.baixaUmidade){
 							novoAlerta('Umidade Baixa', estufa.idMonitoramento);
-						}else if(estufa.dht11_umidade >= estufa.altaUmidade){
+						}else if(estufa.ultimaUmidade >= estufa.altaUmidade){
 							novoAlerta('Umidade Alta', estufa.idMonitoramento);
 						}else{
 							console.log("ERRRROOOOOO");
