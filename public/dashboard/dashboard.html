@@ -23,7 +23,7 @@
 				<a href="dashboard.html"><li class="item-navbar">Home</li></a>
 			    <a href="grafico.html">	<li class="item-navbar" >Estufas</li> </a>
                 <a href="alertas.html"><li class="item-navbar">Alertas</li></a>
-				<a href="contato.html"><li class="item-navbar">Contato</li></a>
+				<a href="https://app.pipefy.com/public/form/1_IgYWIv" target="_blank"><li class="item-navbar">Contato</li></a>
 				<button onclick="deslogar()">Sair</button>
 			</ul>
 		</div>
@@ -346,8 +346,12 @@ fetch(`/medidas/buscarEstufaRecorrente/${fkEmpresa}`, { cache: 'no-store' }).the
 					var div_umid = document.createElement("div");
 					var texto_umid = document.createElement("p");
 					
-					texto_temp.innerHTML = `${estufa.ultimaTemp}ºC`;
-					texto_umid.innerHTML = `${estufa.ultimaUmidade}%`;
+					if(estufa.ultimaTemp != null){
+						texto_temp.innerHTML = `${estufa.ultimaTemp}ºC`;
+					}
+					if(estufa.ultimaUmidade != null){
+						texto_umid.innerHTML = `${estufa.ultimaUmidade}%`;
+					}
 					texto_estufa_nome.innerHTML = `${estufa.nomeEstufa}`;
 
 					div_metrica.className = "div-metrica";
